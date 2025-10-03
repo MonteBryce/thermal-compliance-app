@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "124824593205",
+    "project_id": "alien-hologram-470217-r0",
+    "storage_bucket": "alien-hologram-470217-r0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124824593205:android:e470210f7eba41e80aa27c",
+        "android_client_info": {
+          "package_name": "com.example.my_flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlVoYJDdvOUvvJ7xb8r0nyt6ETZbb-944"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
