@@ -1,0 +1,73 @@
+name: my_flutter_app
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.1.0+2
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^2.30.0
+  firebase_auth: ^4.17.4
+  cloud_firestore: ^4.17.3
+  flutter_riverpod: ^2.6.1
+  google_fonts: ^6.1.0
+  connectivity_plus: ^5.0.2
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.2
+  go_router: ^13.0.0  # or latest
+  intl: ^0.19.0
+  shared_preferences: ^2.2.2
+  flutter_svg: ^2.0.9
+  flutter_secure_storage: ^9.2.2
+  # OCR Dependencies (Web Compatible)
+  image_picker: ^1.1.2
+  permission_handler: ^11.4.0
+  http: ^1.4.0
+  js: ^0.6.7
+  image: ^4.0.17
+  universal_html: ^2.2.4
+  flutter_image_compress: ^2.3.0
+  # ML Kit for OCR (Mobile)
+  google_ml_kit: ^0.16.3
+  # Tesseract OCR for local text recognition
+  tesseract_ocr: ^0.5.0
+  # Excel generation (compatible version)
+  syncfusion_flutter_xlsio: ^24.2.3
+  # UI Components
+  percent_indicator: ^4.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  build_runner: ^2.4.8
+  hive_generator: ^2.0.1
+
+  # You can add more packages here later (e.g., cloud_firestore, firebase_auth)
+
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/data/
+    # - assets/reports/VaporReportTemplate.xlsx
+
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: fonts/NotoSans-Regular.ttf
+
+
+
+

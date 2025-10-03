@@ -1,0 +1,38 @@
+﻿# --- Next.js ---
+.next/
+out/
+
+
+# --- Flutter ---
+build/
+.dart_tool/
+.android/
+.ios/
+linux/flutter/ephemeral/
+macos/Flutter/ephemeral/
+windows/flutter/ephemeral/
+web/.dart_tool/
+
+
+# --- Logs & Coverage ---
+coverage/
+*.log
+
+
+# --- OS noise ---
+.DS_Store
+Thumbs.db
+node_modules
+
+# --- Environment Variables ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+.env.*
+
+# --- Firebase Service Account ---
+serviceAccountKey.json
+**/serviceAccountKey.json
