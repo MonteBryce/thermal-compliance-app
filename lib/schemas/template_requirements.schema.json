@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thermal-logging.texas.gov/schemas/template-requirements.schema.json",
+  "title": "Template-Specific Field Requirements Schema",
+  "description": "Defines required fields and validation rules for each thermal log template",
+  "version": "1.0.0",
+  "type": "object",
+  "patternProperties": {
+    "^[a-z_0-9]+$": {
+      "type": "object",
+      "properties": {
+        "templateId": {"type": "string"},
+        "displayName": {"type": "string"},
+        "capacity": {"type": "string", "enum": ["1.5MMBTU", "10-60MMBTU"]},
+        "fuelType": {"type": "string", "enum": ["METHANE", "PENTANE"]},
+        "monitoringTypes": {
+          "type": "array",
+          "items": {"type": "string", "enum": ["H2S", "LEL", "Benzene", "O2", "VOC"]}
+        },
+        "frequency": {"type": "string", "enum": ["hourly", "12hr"]},
+        "processStage": {"type": "string", "enum": ["standard", "degas", "refill", "final_degas", "dual_target"]},
+        "requiredFields": {
+          "type": "object",
+          "properties": {
+            "identification": {"type": "array", "items": {"type": "string"}},
+            "readings": {"type": "array", "items": {"type": "string"}}, 
+            "flowRates": {"type": "array", "items": {"type": "string"}},
+            "chemicalMonitoring": {"type": "array", "items": {"type": "string"}},
+            "systemMetrics": {"type": "array", "items": {"type": "string"}},
+            "processOperations": {"type": "array", "items": {"type": "string"}},
+            "notes": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "optionalFields": {
+          "type": "object",
+          "properties": {
+            "identification": {"type": "array", "items": {"type": "string"}},
+            "readings": {"type": "array", "items": {"type": "string"}},
+            "flowRates": {"type": "array", "items": {"type": "string"}},
+            "chemicalMonitoring": {"type": "array", "items": {"type": "string"}},
+            "systemMetrics": {"type": "array", "items": {"type": "string"}},
+            "processOperations": {"type": "array", "items": {"type": "string"}},
+            "notes": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "validationRules": {
+          "type": "object",
+          "description": "Template-specific validation rules",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "min": {"type": "number"},
+              "max": {"type": "number"},
+              "warningMin": {"type": "number"},
+              "warningMax": {"type": "number"},
+              "warningMessage": {"type": "string"},
+              "customValidator": {"type": "string"}
+            }
+          }
+        }
+      },
+      "required": ["templateId", "displayName", "capacity", "fuelType", "requiredFields"]
+    }
+  },
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "templates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "methane_1_5mmbtu": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_1_5mmbtu": {"$ref": "#/definitions/templateDefinition"},
+        "methane_10_60mmbtu": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_10_60mmbtu": {"$ref": "#/definitions/templateDefinition"},
+        "methane_10_60mmbtu_2targets": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_h2s_degas": {"$ref": "#/definitions/templateDefinition"},
+        "methane_h2s_12hr": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_h2s_12hr": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_h2s_lel_degas": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_h2s_lel_hourly": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_benzene_degas": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_benzene_lel_degas": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_methane_o2_degas": {"$ref": "#/definitions/templateDefinition"},
+        "methane_refill": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_degas_final": {"$ref": "#/definitions/templateDefinition"},
+        "pentane_degas_tanks": {"$ref": "#/definitions/templateDefinition"},
+        "marathon_gbr_custom": {"$ref": "#/definitions/templateDefinition"}
+      }
+    }
+  },
+  "required": ["schemaVersion", "lastUpdated", "templates"],
+  "definitions": {
+    "templateDefinition": {
+      "type": "object",
+      "properties": {
+        "templateId": {"type": "string"},
+        "displayName": {"type": "string"},
+        "capacity": {"type": "string"},
+        "fuelType": {"type": "string"},
+        "monitoringTypes": {"type": "array", "items": {"type": "string"}},
+        "frequency": {"type": "string"},
+        "processStage": {"type": "string"},
+        "requiredFields": {"type": "object"},
+        "optionalFields": {"type": "object"},
+        "validationRules": {"type": "object"}
+      },
+      "required": ["templateId", "displayName", "capacity", "fuelType", "requiredFields"]
+    }
+  }
+}

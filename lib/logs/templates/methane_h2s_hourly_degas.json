@@ -1,0 +1,74 @@
+{
+  "id": "methane_h2s_hourly_degas",
+  "name": "Methane H2S Hourly Degas Log",
+  "version": "2025-09-11",
+  "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17 - H2S Hourly Degas.xlsx",
+  "fields": [
+    {
+      "key": "date",
+      "label": "Date",
+      "type": "text",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "temperature",
+      "label": "Temperature",
+      "type": "number",
+      "unit": "°F",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "benzene_ppm",
+      "label": "Benzene",
+      "type": "number",
+      "unit": "PPM",
+      "required": false,
+      "visible": true
+    },
+    {
+      "key": "h2s_ppm",
+      "label": "H2S",
+      "type": "number",
+      "unit": "PPM",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "hour",
+      "label": "Hour",
+      "type": "text",
+      "required": true,
+      "visible": true
+    }
+  ],
+  "ui": {
+    "hourSelector": "24h",
+    "groups": [
+      {
+        "title": "Time & Location",
+        "keys": [
+          "date",
+          "hour",
+          "location",
+          "operator"
+        ]
+      },
+      {
+        "title": "Measurements",
+        "keys": [
+          "temperature",
+          "benzene_ppm",
+          "h2s_ppm"
+        ]
+      },
+      {
+        "title": "Notes",
+        "keys": [
+          "notes"
+        ]
+      }
+    ]
+  }
+}

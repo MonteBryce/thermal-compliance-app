@@ -1,0 +1,588 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Texas Thermal Log Excel Column Mappings",
+  "description": "Definitive mapping document linking unified JSON schema fields to Excel columns for all 17 thermal log templates",
+  "version": "1.0.0",
+  "generatedAt": "2025-09-11T18:30:00Z",
+  "commonConfiguration": {
+    "headerRow": 8,
+    "dataStartRow": 9,
+    "timeFormat": "HH:mm",
+    "dateFormat": "MM/DD/YYYY",
+    "numberFormat": "0.00",
+    "textFormat": "General"
+  },
+  "templateMappings": {
+    "marathon_gbr_custom": {
+      "templateId": "marathon_gbr_custom",
+      "displayName": "Texas - BLANK Thermal Log - Marathon GBR - CUSTOM",
+      "excelFile": "Texas - BLANK Thermal Log - Marathon GBR - CUSTOM.xlsx",
+      "sheetName": "Log",
+      "fieldMappings": {
+        "unitNumber": {
+          "columnIndex": 1,
+          "columnLetter": "A",
+          "header": "Unit #",
+          "dataType": "text",
+          "required": true
+        },
+        "readingDateTime": {
+          "columnIndex": 2,
+          "columnLetter": "B", 
+          "header": "Date",
+          "dataType": "date",
+          "format": "MM/DD/YYYY",
+          "required": true
+        },
+        "readingTime": {
+          "columnIndex": 3,
+          "columnLetter": "C",
+          "header": "Hour",
+          "dataType": "time",
+          "format": "HH:mm",
+          "required": true
+        },
+        "operatorName": {
+          "columnIndex": 4,
+          "columnLetter": "D",
+          "header": "Operator",
+          "dataType": "text",
+          "required": true
+        },
+        "inletReading": {
+          "columnIndex": 5,
+          "columnLetter": "E",
+          "header": "Inlet Reading (PPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "outletReading": {
+          "columnIndex": 6,
+          "columnLetter": "F",
+          "header": "Outlet Reading (PPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "exhaustTemperature": {
+          "columnIndex": 7,
+          "columnLetter": "G",
+          "header": "Exhaust Temperature (°F)",
+          "dataType": "number",
+          "format": "0",
+          "unit": "°F",
+          "required": true
+        },
+        "lelInletReading": {
+          "columnIndex": 8,
+          "columnLetter": "H", 
+          "header": "%LEL Inlet",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "%",
+          "required": true
+        },
+        "vaporInletVOCPpm": {
+          "columnIndex": 9,
+          "columnLetter": "I",
+          "header": "Vapor Inlet VOC (PPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "combustionAirFlowRate": {
+          "columnIndex": 10,
+          "columnLetter": "J",
+          "header": "Combustion Air Flow Rate (FPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "FPM",
+          "required": true
+        },
+        "toInletReadingH2S": {
+          "columnIndex": 11,
+          "columnLetter": "K",
+          "header": "H₂S Reading (PPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "vaporInletFlowRateFpm": {
+          "columnIndex": 12,
+          "columnLetter": "L",
+          "header": "Vapor Inlet Flow Rate (FPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "FPM",
+          "required": false
+        },
+        "tankRefillFlowRateBblHr": {
+          "columnIndex": 13,
+          "columnLetter": "M",
+          "header": "Tank Refill Flow Rate (BBL/HR)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "BBL/HR",
+          "required": false
+        },
+        "vacuumAtTankVaporOutlet": {
+          "columnIndex": 14,
+          "columnLetter": "N",
+          "header": "Vacuum at Tank Vapor Outlet (Inch H₂O)",
+          "dataType": "number",
+          "format": "0.00",
+          "unit": "Inch H₂O",
+          "required": false
+        },
+        "totalizer": {
+          "columnIndex": 15,
+          "columnLetter": "O",
+          "header": "Totalizer (SCF)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "SCF",
+          "required": false
+        },
+        "observations": {
+          "columnIndex": 16,
+          "columnLetter": "P",
+          "header": "Observations/Anomalies",
+          "dataType": "text",
+          "required": false
+        }
+      }
+    },
+    "thermal_standard": {
+      "templateId": "thermal",
+      "displayName": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17",
+      "excelFile": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17.xlsx",
+      "sheetName": "Log",
+      "fieldMappings": {
+        "unitNumber": {
+          "columnIndex": 1,
+          "columnLetter": "A",
+          "header": "Unit #",
+          "dataType": "text",
+          "required": true
+        },
+        "readingDateTime": {
+          "columnIndex": 2,
+          "columnLetter": "B",
+          "header": "Date",
+          "dataType": "date",
+          "format": "MM/DD/YYYY",
+          "required": true
+        },
+        "readingTime": {
+          "columnIndex": 3,
+          "columnLetter": "C",
+          "header": "Hour",
+          "dataType": "time", 
+          "format": "HH:mm",
+          "required": true
+        },
+        "operatorName": {
+          "columnIndex": 4,
+          "columnLetter": "D",
+          "header": "Operator",
+          "dataType": "text",
+          "required": true
+        },
+        "inletReading": {
+          "columnIndex": 5,
+          "columnLetter": "E",
+          "header": "Inlet Reading (PPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "outletReading": {
+          "columnIndex": 6,
+          "columnLetter": "F",
+          "header": "Outlet Reading (PPM)", 
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "toInletReadingH2S": {
+          "columnIndex": 7,
+          "columnLetter": "G",
+          "header": "T.O. Inlet Reading – PPM H₂S",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "vaporInletFlowRateFpm": {
+          "columnIndex": 8,
+          "columnLetter": "H",
+          "header": "Vapor Inlet Flow Rate (FPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "FPM",
+          "required": true
+        },
+        "vaporInletFlowRateBbl": {
+          "columnIndex": 9,
+          "columnLetter": "I",
+          "header": "Vapor Inlet Flow Rate (BBL/HR)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "BBL/HR",
+          "required": true
+        },
+        "tankRefillFlowRate": {
+          "columnIndex": 10,
+          "columnLetter": "J",
+          "header": "Tank Refill Flow Rate (BBL/HR)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "BBL/HR",
+          "required": true
+        },
+        "combustionAirFlowRate": {
+          "columnIndex": 11,
+          "columnLetter": "K",
+          "header": "Combustion Air Flow Rate (FPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "FPM",
+          "required": true
+        },
+        "vacuumAtTankVaporOutlet": {
+          "columnIndex": 12,
+          "columnLetter": "L",
+          "header": "Vacuum at Tank Vapor Outlet (Inch H₂O)",
+          "dataType": "number",
+          "format": "0.00",
+          "unit": "Inch H₂O",
+          "required": true
+        },
+        "exhaustTemperature": {
+          "columnIndex": 13,
+          "columnLetter": "M",
+          "header": "Exhaust Temperature (°F)",
+          "dataType": "number",
+          "format": "0",
+          "unit": "°F",
+          "required": true
+        },
+        "totalizer": {
+          "columnIndex": 14,
+          "columnLetter": "N",
+          "header": "Totalizer (SCF)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "SCF", 
+          "required": true
+        },
+        "observations": {
+          "columnIndex": 15,
+          "columnLetter": "O",
+          "header": "Observations/Anomalies",
+          "dataType": "text",
+          "required": false
+        }
+      }
+    },
+    "pentane_h2s_lel_degas": {
+      "templateId": "pentane_h2s_lel_degas",
+      "displayName": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S & LEL Hourly Degas",
+      "excelFile": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S & LEL Hourly Degas.xlsx",
+      "sheetName": "Log",
+      "fieldMappings": {
+        "unitNumber": {
+          "columnIndex": 1,
+          "columnLetter": "A",
+          "header": "Unit #",
+          "dataType": "text",
+          "required": true
+        },
+        "readingDateTime": {
+          "columnIndex": 2,
+          "columnLetter": "B",
+          "header": "Date",
+          "dataType": "date",
+          "format": "MM/DD/YYYY",
+          "required": true
+        },
+        "readingTime": {
+          "columnIndex": 3,
+          "columnLetter": "C",
+          "header": "Hour",
+          "dataType": "time",
+          "format": "HH:mm",
+          "required": true
+        },
+        "operatorName": {
+          "columnIndex": 4,
+          "columnLetter": "D",
+          "header": "Operator",
+          "dataType": "text",
+          "required": true
+        },
+        "inletReading": {
+          "columnIndex": 5,
+          "columnLetter": "E",
+          "header": "Inlet Reading (PPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "outletReading": {
+          "columnIndex": 6,
+          "columnLetter": "F",
+          "header": "Outlet Reading (PPM)",
+          "dataType": "number", 
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "toInletReadingH2S": {
+          "columnIndex": 7,
+          "columnLetter": "G",
+          "header": "H₂S Inlet (PPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "PPM",
+          "required": true
+        },
+        "lelInletReading": {
+          "columnIndex": 8,
+          "columnLetter": "H",
+          "header": "%LEL Inlet",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "%",
+          "required": true
+        },
+        "lelOutletReading": {
+          "columnIndex": 9,
+          "columnLetter": "I", 
+          "header": "%LEL Outlet",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "%",
+          "required": false
+        },
+        "exhaustTemperature": {
+          "columnIndex": 10,
+          "columnLetter": "J",
+          "header": "Exhaust Temperature (°F)",
+          "dataType": "number",
+          "format": "0",
+          "unit": "°F",
+          "required": true
+        },
+        "degasStartTime": {
+          "columnIndex": 11,
+          "columnLetter": "K",
+          "header": "Degas Start Time",
+          "dataType": "time",
+          "format": "HH:mm",
+          "required": false
+        },
+        "degasEndTime": {
+          "columnIndex": 12,
+          "columnLetter": "L",
+          "header": "Degas End Time",
+          "dataType": "time",
+          "format": "HH:mm", 
+          "required": false
+        },
+        "combustionAirFlowRate": {
+          "columnIndex": 13,
+          "columnLetter": "M",
+          "header": "Combustion Air Flow Rate (FPM)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "FPM",
+          "required": true
+        },
+        "totalizer": {
+          "columnIndex": 14,
+          "columnLetter": "N",
+          "header": "Totalizer (SCF)",
+          "dataType": "number",
+          "format": "0.0",
+          "unit": "SCF",
+          "required": false
+        },
+        "observations": {
+          "columnIndex": 15,
+          "columnLetter": "O",
+          "header": "Observations/Anomalies",
+          "dataType": "text",
+          "required": false
+        }
+      }
+    }
+  },
+  "fieldMapping": {
+    "universalFields": {
+      "unitNumber": {
+        "schemaFieldId": "unitNumber",
+        "commonHeaders": ["Unit #", "Unit Number", "Unit ID"],
+        "dataType": "text",
+        "defaultColumn": "A",
+        "notes": "Equipment unit identifier - always first column"
+      },
+      "readingDateTime": {
+        "schemaFieldId": "readingDateTime", 
+        "commonHeaders": ["Date", "Reading Date", "Log Date"],
+        "dataType": "date",
+        "format": "MM/DD/YYYY",
+        "defaultColumn": "B",
+        "notes": "Date of reading - typically column B"
+      },
+      "readingTime": {
+        "schemaFieldId": "readingTime",
+        "commonHeaders": ["Hour", "Time", "Reading Time"],
+        "dataType": "time",
+        "format": "HH:mm",
+        "defaultColumn": "C",
+        "notes": "Time of reading - typically column C"
+      },
+      "operatorName": {
+        "schemaFieldId": "operatorName",
+        "commonHeaders": ["Operator", "Tech", "Technician"],
+        "dataType": "text",
+        "defaultColumn": "D",
+        "notes": "Person recording data - typically column D"
+      },
+      "inletReading": {
+        "schemaFieldId": "inletReading",
+        "commonHeaders": ["Inlet Reading (PPM)", "Vapor Inlet (PPM)", "Inlet PPM"],
+        "dataType": "number",
+        "unit": "PPM",
+        "format": "0.0",
+        "notes": "Vapor inlet concentration - core measurement"
+      },
+      "outletReading": {
+        "schemaFieldId": "outletReading",
+        "commonHeaders": ["Outlet Reading (PPM)", "Vapor Outlet (PPM)", "Outlet PPM"],
+        "dataType": "number",
+        "unit": "PPM",
+        "format": "0.0",
+        "notes": "Vapor outlet concentration - core measurement"
+      },
+      "exhaustTemperature": {
+        "schemaFieldId": "exhaustTemperature",
+        "commonHeaders": ["Exhaust Temperature (°F)", "Exhaust Temp", "T.O. Temperature"],
+        "dataType": "number",
+        "unit": "°F", 
+        "format": "0",
+        "notes": "Thermal oxidizer exhaust temperature"
+      }
+    },
+    "conditionalFields": {
+      "toInletReadingH2S": {
+        "schemaFieldId": "toInletReadingH2S",
+        "commonHeaders": ["T.O. Inlet Reading – PPM H₂S", "H₂S Inlet (PPM)", "H₂S Reading (PPM)"],
+        "dataType": "number",
+        "unit": "PPM",
+        "format": "0.0",
+        "enabledForTemplates": ["thermal", "marathon_gbr_custom", "methane_h2s_12hr", "pentane_h2s_lel_degas"],
+        "notes": "H2S concentration monitoring"
+      },
+      "lelInletReading": {
+        "schemaFieldId": "lelInletReading", 
+        "commonHeaders": ["%LEL Inlet", "LEL Inlet (%)", "LEL Reading"],
+        "dataType": "number",
+        "unit": "%",
+        "format": "0.0",
+        "enabledForTemplates": ["marathon_gbr_custom", "pentane_h2s_lel_degas", "pentane_hourly_lel"],
+        "notes": "Lower Explosive Limit monitoring"
+      },
+      "benzeneTarget": {
+        "schemaFieldId": "benzeneTarget",
+        "commonHeaders": ["Benzene Target (PPM)", "Benzene Limit", "Target Benzene"],
+        "dataType": "number",
+        "unit": "PPM",
+        "format": "0.0",
+        "enabledForTemplates": ["methane_h2s_benzene", "pentane_h2s_benzene"],
+        "notes": "Target benzene concentration level"
+      },
+      "o2Concentration": {
+        "schemaFieldId": "o2Concentration",
+        "commonHeaders": ["O₂ Concentration (%)", "Oxygen (%)", "O2 Reading"],
+        "dataType": "number",
+        "unit": "%",
+        "format": "0.0",
+        "enabledForTemplates": ["pentane_o2_h2s_degas"],
+        "notes": "Oxygen concentration monitoring"
+      }
+    }
+  },
+  "exportConfiguration": {
+    "defaultFormats": {
+      "text": "General",
+      "number": "0.00", 
+      "date": "MM/DD/YYYY",
+      "time": "HH:mm",
+      "percentage": "0.0%"
+    },
+    "validationRules": {
+      "requiredFields": ["unitNumber", "readingDateTime", "operatorName", "inletReading", "outletReading"],
+      "numberValidation": {
+        "min": 0,
+        "precision": 2
+      },
+      "textValidation": {
+        "maxLength": 50
+      },
+      "dateValidation": {
+        "format": "MM/DD/YYYY",
+        "minDate": "01/01/2020",
+        "maxDate": "12/31/2030"
+      }
+    }
+  },
+  "templateVariations": {
+    "capacity_1_5MMBTU": {
+      "templates": ["methane_1_5mmbtu", "pentane_1_5mmbtu"],
+      "commonFields": ["unitNumber", "readingDateTime", "readingTime", "operatorName", "inletReading", "outletReading", "exhaustTemperature", "observations"],
+      "notes": "Simplified template for smaller capacity units"
+    },
+    "capacity_10_60MMBTU": {
+      "templates": ["methane_10_60mmbtu", "pentane_10_60mmbtu", "thermal"],
+      "commonFields": ["unitNumber", "readingDateTime", "readingTime", "operatorName", "inletReading", "outletReading", "toInletReadingH2S", "vaporInletFlowRateFpm", "combustionAirFlowRate", "vacuumAtTankVaporOutlet", "exhaustTemperature", "totalizer", "observations"],
+      "notes": "Full feature template for standard capacity units"
+    },
+    "h2s_monitoring": {
+      "templates": ["methane_h2s_12hr", "methane_h2s_hourly_degas", "pentane_h2s_12hr", "pentane_h2s_degas", "pentane_h2s_refill", "pentane_h2s_final_degas"],
+      "additionalFields": ["toInletReadingH2S", "h2sOutletReading", "h2s12hrAverage"],
+      "notes": "Templates with hydrogen sulfide monitoring capabilities"
+    },
+    "benzene_monitoring": {
+      "templates": ["methane_h2s_benzene", "pentane_h2s_benzene"],
+      "additionalFields": ["benzeneTarget", "benzeneInlet", "benzeneOutlet", "benzeneConcentration"],
+      "notes": "Templates with benzene monitoring capabilities"
+    },
+    "lel_monitoring": {
+      "templates": ["pentane_h2s_lel_degas", "pentane_hourly_lel"],
+      "additionalFields": ["lelInletReading", "lelOutletReading", "lelHourlyAverage"],
+      "notes": "Templates with Lower Explosive Limit monitoring"
+    },
+    "process_operations": {
+      "degas": {
+        "templates": ["methane_h2s_hourly_degas", "pentane_h2s_lel_degas", "pentane_h2s_degas", "pentane_h2s_final_degas", "pentane_o2_h2s_degas"],
+        "additionalFields": ["degasStartTime", "degasEndTime", "degasFlowRate", "degasVolume"],
+        "notes": "Templates for degas operation monitoring"
+      },
+      "refill": {
+        "templates": ["pentane_h2s_refill"],
+        "additionalFields": ["refillStartTime", "refillEndTime", "refillRate", "refillVolume"],
+        "notes": "Templates for refill operation monitoring"
+      }
+    }
+  }
+}

@@ -1,0 +1,611 @@
+{
+  "schemaVersion": "1.0.0",
+  "commonSections": [
+    {
+      "id": "identification",
+      "displayName": "🏷️ Identification",
+      "order": 1,
+      "collapsible": false
+    },
+    {
+      "id": "readings",
+      "displayName": "🔍 Readings",
+      "order": 2,
+      "collapsible": false
+    },
+    {
+      "id": "flow_rates", 
+      "displayName": "🌊 Flow Rates",
+      "order": 3,
+      "collapsible": false
+    },
+    {
+      "id": "system_metrics",
+      "displayName": "🔥 System Metrics", 
+      "order": 4,
+      "collapsible": false
+    },
+    {
+      "id": "chemical_monitoring",
+      "displayName": "🧪 Chemical Monitoring",
+      "order": 5,
+      "collapsible": true,
+      "collapsed": false
+    },
+    {
+      "id": "process_operations",
+      "displayName": "⚙️ Process Operations",
+      "order": 6,
+      "collapsible": true,
+      "collapsed": true
+    },
+    {
+      "id": "optional_readings",
+      "displayName": "📊 Optional Readings",
+      "order": 7,
+      "collapsible": true,
+      "collapsed": true
+    },
+    {
+      "id": "notes",
+      "displayName": "📝 Notes",
+      "order": 8,
+      "collapsible": false
+    }
+  ],
+  "universalFields": [
+    {
+      "id": "unitNumber",
+      "label": "Unit #",
+      "type": "text",
+      "section": "identification",
+      "order": 1,
+      "required": true,
+      "validation": {
+        "required": true,
+        "minLength": 1,
+        "maxLength": 10
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Equipment unit identifier"
+    },
+    {
+      "id": "operatorName",
+      "label": "Operator",
+      "type": "text",
+      "section": "identification", 
+      "order": 2,
+      "required": true,
+      "validation": {
+        "required": true,
+        "minLength": 2,
+        "maxLength": 50
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Person recording the data"
+    },
+    {
+      "id": "readingDateTime",
+      "label": "Date/Time",
+      "type": "dateTime",
+      "section": "identification",
+      "order": 3,
+      "required": true,
+      "validation": {
+        "required": true
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Timestamp of reading"
+    },
+    {
+      "id": "inletReading",
+      "label": "Inlet Reading",
+      "unit": "PPM",
+      "type": "number",
+      "section": "readings",
+      "order": 1,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "warningMax": 1000,
+        "warningMessage": "⚠ High inlet concentration detected"
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Vapor inlet concentration measurement"
+    },
+    {
+      "id": "outletReading", 
+      "label": "Outlet Reading",
+      "unit": "PPM",
+      "type": "number",
+      "section": "readings",
+      "order": 2,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "warningMax": 500,
+        "warningMessage": "⚠ High outlet concentration - check system efficiency"
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Vapor outlet concentration measurement"
+    },
+    {
+      "id": "exhaustTemperature",
+      "label": "Exhaust Temperature",
+      "unit": "°F",
+      "type": "number",
+      "section": "readings",
+      "order": 3,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "max": 2000,
+        "warningMin": 300,
+        "warningMax": 1200,
+        "warningMessage": "⚠ Temperature outside normal operating range (300-1200°F)",
+        "customValidator": "thermal_efficiency"
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Thermal oxidizer exhaust temperature"
+    }
+  ],
+  "conditionalFields": [
+    {
+      "id": "lelInletReading",
+      "label": "%LEL Inlet",
+      "unit": "%",
+      "type": "number",
+      "section": "chemical_monitoring",
+      "order": 1,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "max": 100,
+        "warningMax": 10,
+        "warningMessage": "⚠ Above safety threshold (10% LEL)",
+        "customValidator": "lel_safety"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "marathon_gbr_custom",
+          "pentane_lel_hourly",
+          "pentane_h2s_lel_degas"
+        ],
+        "dependsOn": ["monitoringTypes"],
+        "condition": "monitoringTypes.includes('LEL')"
+      },
+      "helpText": "Lower Explosive Limit percentage at inlet"
+    },
+    {
+      "id": "lelOutletReading",
+      "label": "%LEL Outlet", 
+      "unit": "%",
+      "type": "number",
+      "section": "chemical_monitoring",
+      "order": 2,
+      "validation": {
+        "min": 0,
+        "max": 100,
+        "warningMax": 5,
+        "warningMessage": "⚠ Outlet LEL should be minimal after thermal oxidation"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "pentane_lel_hourly",
+          "pentane_h2s_lel_degas"
+        ],
+        "dependsOn": ["monitoringTypes"], 
+        "condition": "monitoringTypes.includes('LEL')"
+      },
+      "helpText": "Lower Explosive Limit percentage at outlet"
+    },
+    {
+      "id": "toInletReadingH2S",
+      "label": "T.O. Inlet Reading – H₂S",
+      "unit": "PPM",
+      "type": "number", 
+      "section": "chemical_monitoring",
+      "order": 3,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "warningMax": 10,
+        "warningMessage": "⚠ Above OSHA PEL (10 PPM H₂S)",
+        "customValidator": "h2s_safety"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "thermal",
+          "marathon_gbr_custom",
+          "methane_h2s_12hr",
+          "methane_h2s_hourly_degas", 
+          "methane_h2s_benzene",
+          "pentane_h2s_lel_degas",
+          "pentane_h2s_12hr",
+          "pentane_h2s_benzene",
+          "pentane_h2s_final_degas",
+          "pentane_h2s_degas",
+          "pentane_h2s_refill",
+          "pentane_o2_h2s_degas"
+        ],
+        "dependsOn": ["monitoringTypes"],
+        "condition": "monitoringTypes.includes('H2S')"
+      },
+      "helpText": "Hydrogen sulfide concentration at thermal oxidizer inlet"
+    },
+    {
+      "id": "benzeneTarget",
+      "label": "Benzene Target",
+      "unit": "PPM",
+      "type": "number",
+      "section": "chemical_monitoring",
+      "order": 4,
+      "validation": {
+        "min": 0,
+        "warningMax": 1,
+        "warningMessage": "⚠ Above EPA benzene exposure limit"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "methane_h2s_benzene",
+          "pentane_h2s_benzene"
+        ],
+        "dependsOn": ["monitoringTypes"],
+        "condition": "monitoringTypes.includes('Benzene')"
+      },
+      "helpText": "Target benzene concentration level"
+    },
+    {
+      "id": "benzeneInlet",
+      "label": "Benzene Inlet",
+      "unit": "PPM", 
+      "type": "number",
+      "section": "chemical_monitoring",
+      "order": 5,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "warningMax": 1,
+        "warningMessage": "⚠ High benzene concentration detected"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "methane_h2s_benzene", 
+          "pentane_h2s_benzene"
+        ],
+        "dependsOn": ["monitoringTypes"],
+        "condition": "monitoringTypes.includes('Benzene')"
+      },
+      "helpText": "Benzene concentration at inlet"
+    },
+    {
+      "id": "o2Concentration",
+      "label": "O₂ Concentration",
+      "unit": "%",
+      "type": "number",
+      "section": "chemical_monitoring",
+      "order": 6,
+      "validation": {
+        "min": 0,
+        "max": 25,
+        "warningMin": 16,
+        "warningMax": 23.5,
+        "warningMessage": "⚠ O₂ level outside normal atmospheric range"
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["pentane_o2_h2s_degas"],
+        "dependsOn": ["monitoringTypes"],
+        "condition": "monitoringTypes.includes('O2')"
+      },
+      "helpText": "Oxygen concentration measurement"
+    },
+    {
+      "id": "vaporInletVOCPpm",
+      "label": "Vapor Inlet VOC",
+      "unit": "PPM",
+      "type": "number",
+      "section": "readings",
+      "order": 4,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["marathon_gbr_custom"],
+        "dependsOn": ["monitoringTypes"],
+        "condition": "monitoringTypes.includes('VOC')"
+      },
+      "helpText": "Volatile organic compound concentration at vapor inlet"
+    },
+    {
+      "id": "vaporInletFlowRateFpm",
+      "label": "Vapor Inlet Flow Rate",
+      "unit": "FPM",
+      "type": "number",
+      "section": "flow_rates",
+      "order": 1,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "warningMin": 50,
+        "warningMessage": "⚠ Low vapor flow rate detected"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "thermal",
+          "marathon_gbr_custom"
+        ]
+      },
+      "helpText": "Vapor inlet flow rate in feet per minute"
+    },
+    {
+      "id": "vaporInletFlowRateBbl",
+      "label": "Vapor Inlet Flow Rate", 
+      "unit": "BBL/HR",
+      "type": "number",
+      "section": "flow_rates",
+      "order": 1,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["thermal"]
+      },
+      "helpText": "Vapor inlet flow rate in barrels per hour"
+    },
+    {
+      "id": "tankRefillFlowRate",
+      "label": "Tank Refill Flow Rate",
+      "unit": "BBL/HR",
+      "type": "number",
+      "section": "flow_rates", 
+      "order": 2,
+      "validation": {
+        "min": 0
+      },
+      "isOptional": true,
+      "conditionalDisplay": {
+        "enabledFor": [
+          "thermal",
+          "marathon_gbr_custom"
+        ]
+      },
+      "helpText": "Tank refill flow rate in barrels per hour"
+    },
+    {
+      "id": "combustionAirFlowRate",
+      "label": "Combustion Air Flow Rate",
+      "unit": "FPM",
+      "type": "number",
+      "section": "flow_rates",
+      "order": 3,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "warningMin": 100,
+        "warningMessage": "⚠ Low combustion air flow - check fan operation"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "thermal",
+          "marathon_gbr_custom"
+        ]
+      },
+      "helpText": "Combustion air flow rate in feet per minute"
+    },
+    {
+      "id": "vacuumAtTankVaporOutlet",
+      "label": "Vacuum at Tank Vapor Outlet",
+      "unit": "Inch H₂O",
+      "type": "number",
+      "section": "system_metrics",
+      "order": 1,
+      "required": true,
+      "validation": {
+        "required": true,
+        "min": 0,
+        "warningMin": 2,
+        "warningMessage": "⚠ Below minimum requirement (2 Inch H₂O)"
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "thermal",
+          "marathon_gbr_custom"
+        ]
+      },
+      "helpText": "Vacuum measurement at tank vapor outlet - minimum requirement: 2 Inch H₂O"
+    },
+    {
+      "id": "totalizer",
+      "label": "Totalizer",
+      "unit": "SCF",
+      "type": "number",
+      "section": "system_metrics",
+      "order": 2,
+      "validation": {
+        "min": 0
+      },
+      "conditionalDisplay": {
+        "enabledFor": [
+          "thermal",
+          "marathon_gbr_custom"
+        ]
+      },
+      "helpText": "Cumulative standard cubic feet processed"
+    },
+    {
+      "id": "roofLegHeight",
+      "label": "Roof/Leg Height",
+      "unit": "ft",
+      "type": "number",
+      "section": "system_metrics",
+      "order": 3,
+      "validation": {
+        "min": 0,
+        "max": 200
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Tank roof or leg height measurement"
+    },
+    {
+      "id": "degasStartTime",
+      "label": "Degas Start Time",
+      "type": "time",
+      "section": "process_operations",
+      "order": 1,
+      "conditionalDisplay": {
+        "enabledFor": [
+          "methane_h2s_hourly_degas",
+          "pentane_h2s_lel_degas",
+          "pentane_h2s_final_degas",
+          "pentane_h2s_degas",
+          "pentane_o2_h2s_degas"
+        ],
+        "dependsOn": ["processStage"],
+        "condition": "processStage.includes('degas')"
+      },
+      "helpText": "Start time of degas operation"
+    },
+    {
+      "id": "degasEndTime",
+      "label": "Degas End Time",
+      "type": "time", 
+      "section": "process_operations",
+      "order": 2,
+      "conditionalDisplay": {
+        "enabledFor": [
+          "methane_h2s_hourly_degas",
+          "pentane_h2s_lel_degas", 
+          "pentane_h2s_final_degas",
+          "pentane_h2s_degas",
+          "pentane_o2_h2s_degas"
+        ],
+        "dependsOn": ["processStage"],
+        "condition": "processStage.includes('degas')"
+      },
+      "helpText": "End time of degas operation"
+    },
+    {
+      "id": "refillStartTime",
+      "label": "Refill Start Time",
+      "type": "time",
+      "section": "process_operations",
+      "order": 3,
+      "conditionalDisplay": {
+        "enabledFor": ["pentane_h2s_refill"],
+        "dependsOn": ["processStage"],
+        "condition": "processStage === 'refill'"
+      },
+      "helpText": "Start time of refill operation"
+    },
+    {
+      "id": "refillEndTime", 
+      "label": "Refill End Time",
+      "type": "time",
+      "section": "process_operations",
+      "order": 4,
+      "conditionalDisplay": {
+        "enabledFor": ["pentane_h2s_refill"],
+        "dependsOn": ["processStage"], 
+        "condition": "processStage === 'refill'"
+      },
+      "helpText": "End time of refill operation"
+    },
+    {
+      "id": "observations",
+      "label": "Observations / Anomalies",
+      "type": "text",
+      "section": "notes",
+      "order": 1,
+      "validation": {
+        "maxLength": 1000
+      },
+      "conditionalDisplay": {
+        "enabledFor": ["*"]
+      },
+      "helpText": "Enter observations, anomalies, equipment issues, or maintenance notes"
+    }
+  ],
+  "templateSpecificMappings": {
+    "marathon_gbr_custom": {
+      "templateId": "marathon_gbr_custom",
+      "displayName": "Texas - BLANK Thermal Log - Marathon GBR - CUSTOM",
+      "capacity": "10-60MMBTU",
+      "fuelType": "METHANE",
+      "monitoringTypes": ["H2S", "LEL", "VOC"],
+      "frequency": "hourly",
+      "processStage": "standard",
+      "enabledFieldIds": [
+        "unitNumber",
+        "operatorName", 
+        "readingDateTime",
+        "inletReading",
+        "outletReading",
+        "exhaustTemperature",
+        "lelInletReading",
+        "vaporInletVOCPpm",
+        "combustionAirFlowRate",
+        "toInletReadingH2S",
+        "vaporInletFlowRateFpm",
+        "tankRefillFlowRate",
+        "vacuumAtTankVaporOutlet",
+        "totalizer",
+        "roofLegHeight",
+        "observations"
+      ],
+      "excelTemplatePath": "reports/templates/Texas - BLANK Thermal Log - Marathon GBR - CUSTOM.xlsx"
+    },
+    "thermal": {
+      "templateId": "thermal",
+      "displayName": "Thermal Data Entry",
+      "capacity": "10-60MMBTU",
+      "fuelType": "METHANE",
+      "monitoringTypes": ["H2S"],
+      "frequency": "hourly",
+      "processStage": "standard",
+      "enabledFieldIds": [
+        "unitNumber",
+        "operatorName",
+        "readingDateTime", 
+        "inletReading",
+        "outletReading",
+        "toInletReadingH2S",
+        "vaporInletFlowRateFpm",
+        "vaporInletFlowRateBbl",
+        "tankRefillFlowRate",
+        "combustionAirFlowRate",
+        "vacuumAtTankVaporOutlet",
+        "exhaustTemperature",
+        "totalizer",
+        "roofLegHeight",
+        "observations"
+      ],
+      "excelTemplatePath": "reports/templates/Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17.xlsx"
+    }
+  }
+}

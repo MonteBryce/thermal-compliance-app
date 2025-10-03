@@ -1,0 +1,404 @@
+{
+  "version": "1.0.0", 
+  "description": "Template-specific mock data with variations and edge cases",
+  "generatedAt": "2025-09-11T19:15:00Z",
+  "templateVariations": {
+    "small_capacity_templates": {
+      "description": "Mock data for 1.5MMBTU capacity templates",
+      "templates": ["methane_1_5mmbtu", "pentane_1_5mmbtu"],
+      "variations": {
+        "normal_operation": {
+          "methane_1_5mmbtu": [
+            {
+              "unitNumber": "ME15-A01",
+              "operatorName": "Alice Cooper",
+              "readingDateTime": "2025-09-11T08:00:00Z",
+              "inletReading": 178.9,
+              "outletReading": 8.4,
+              "exhaustTemperature": 1512.3,
+              "roofLegHeight": 7.8,
+              "totalizer": 34567.2,
+              "observations": "Morning startup complete. All systems nominal."
+            },
+            {
+              "unitNumber": "ME15-B02",
+              "operatorName": "Bob Wilson",
+              "readingDateTime": "2025-09-11T12:00:00Z", 
+              "inletReading": 289.1,
+              "outletReading": 14.7,
+              "exhaustTemperature": 1478.6,
+              "roofLegHeight": 8.9,
+              "totalizer": 45672.8,
+              "observations": "Midday operations steady. Slight increase in inlet concentration."
+            }
+          ],
+          "pentane_1_5mmbtu": [
+            {
+              "unitNumber": "PE15-C03",
+              "operatorName": "Carol Davis",
+              "readingDateTime": "2025-09-11T10:00:00Z",
+              "inletReading": 234.5,
+              "outletReading": 11.2,
+              "exhaustTemperature": 1543.7,
+              "roofLegHeight": 9.1,
+              "totalizer": 38901.4,
+              "observations": "Pentane oxidizer running efficiently. Temperature optimal."
+            }
+          ]
+        },
+        "high_concentration": {
+          "methane_1_5mmbtu": [
+            {
+              "unitNumber": "ME15-D04",
+              "operatorName": "David Lee",
+              "readingDateTime": "2025-09-11T16:00:00Z",
+              "inletReading": 456.8,
+              "outletReading": 23.7,
+              "exhaustTemperature": 1589.2,
+              "roofLegHeight": 8.3,
+              "totalizer": 56789.1,
+              "observations": "Higher than normal inlet concentrations. System compensating well.",
+              "validationWarnings": ["High inlet concentration detected"]
+            }
+          ]
+        }
+      }
+    },
+    "standard_capacity_templates": {
+      "description": "Mock data for 10-60MMBTU capacity templates", 
+      "templates": ["methane_10_60mmbtu", "pentane_10_60mmbtu"],
+      "variations": {
+        "chemical_monitoring": {
+          "methane_10_60mmbtu": [
+            {
+              "unitNumber": "ME60-E05",
+              "operatorName": "Eve Garcia",
+              "readingDateTime": "2025-09-11T14:00:00Z",
+              "inletReading": 723.4,
+              "outletReading": 36.8,
+              "exhaustTemperature": 1323.9,
+              "vaporInletFlowRateFpm": 92.7,
+              "vaporInletFlowRateBbl": 14.5,
+              "tankRefillFlowRate": 11.2,
+              "combustionAirFlowRate": 132.4,
+              "toInletReadingH2S": 9.3,
+              "vacuumAtTankVaporOutlet": 2.9,
+              "totalizer": 156234.7,
+              "observations": "H2S monitoring active. Levels within acceptable range."
+            }
+          ],
+          "pentane_10_60mmbtu": [
+            {
+              "unitNumber": "PE60-F06",
+              "operatorName": "Frank Miller",
+              "readingDateTime": "2025-09-11T15:00:00Z",
+              "inletReading": 589.2,
+              "outletReading": 28.9,
+              "exhaustTemperature": 1445.1,
+              "roofLegHeight": 10.2,
+              "vaporInletFlowRateFpm": 87.3,
+              "combustionAirFlowRate": 145.8,
+              "benzeneTarget": 3.1,
+              "totalizer": 189456.3,
+              "observations": "Pentane unit with benzene monitoring. All targets met."
+            }
+          ]
+        },
+        "dual_target_operation": {
+          "methane_10_60mmbtu_2targets": [
+            {
+              "unitNumber": "ME2T-G07",
+              "operatorName": "Grace Chen",
+              "readingDateTime": "2025-09-11T13:00:00Z",
+              "inletReading": 634.7,
+              "outletReading": 31.2,
+              "exhaustTemperature": 1367.4,
+              "vaporInletFlowRateFpm": 94.6,
+              "combustionAirFlowRate": 128.9,
+              "targetNumber": 1,
+              "totalizer": 134567.8,
+              "observations": "Target 1 operation. Switching to Target 2 scheduled for next hour."
+            },
+            {
+              "unitNumber": "ME2T-G07",
+              "operatorName": "Grace Chen", 
+              "readingDateTime": "2025-09-11T14:00:00Z",
+              "inletReading": 587.3,
+              "outletReading": 29.8,
+              "exhaustTemperature": 1389.6,
+              "vaporInletFlowRateFpm": 91.4,
+              "combustionAirFlowRate": 134.2,
+              "targetNumber": 2,
+              "totalizer": 134598.3,
+              "observations": "Switched to Target 2. Smooth transition completed."
+            }
+          ]
+        }
+      }
+    },
+    "specialized_monitoring": {
+      "description": "Mock data for specialized chemical monitoring templates",
+      "h2s_monitoring": {
+        "pentane_h2s_degas": [
+          {
+            "unitNumber": "PH2D-H08",
+            "operatorName": "Henry Johnson",
+            "readingDateTime": "2025-09-11T11:00:00Z",
+            "inletReading": 798.1,
+            "outletReading": 42.3,
+            "exhaustTemperature": 1312.7,
+            "vaporInletFlowRateFpm": 108.9,
+            "combustionAirFlowRate": 142.6,
+            "toInletReadingH2S": 16.7,
+            "h2sOutletReading": 2.1,
+            "degasOperationStatus": "active",
+            "vacuumAtTankVaporOutlet": 3.4,
+            "totalizer": 89432.1,
+            "observations": "Degas operation with elevated H2S. Outlet reduction effective."
+          }
+        ],
+        "methane_h2s_12hr": [
+          {
+            "unitNumber": "MH12-I09",
+            "operatorName": "Irene Taylor",
+            "readingDateTime": "2025-09-11T06:00:00Z",
+            "inletReading": 512.6,
+            "outletReading": 18.9,
+            "exhaustTemperature": 1401.8,
+            "vaporInletFlowRateFpm": 83.7,
+            "combustionAirFlowRate": 126.3,
+            "toInletReadingH2S": 11.4,
+            "h2sOutletReading": 0.8,
+            "totalizer": 201345.6,
+            "observations": "Start of 12-hour H2S monitoring cycle. Baseline readings established."
+          }
+        ]
+      },
+      "lel_monitoring": {
+        "pentane_h2s_lel_degas": [
+          {
+            "unitNumber": "PHLD-J10",
+            "operatorName": "Jack Anderson", 
+            "readingDateTime": "2025-09-11T09:00:00Z",
+            "inletReading": 687.4,
+            "outletReading": 34.1,
+            "exhaustTemperature": 1356.2,
+            "vaporInletFlowRateFpm": 99.8,
+            "combustionAirFlowRate": 137.5,
+            "toInletReadingH2S": 13.2,
+            "h2sOutletReading": 1.6,
+            "lelInletReading": 7.3,
+            "degasOperationStatus": "active", 
+            "vacuumAtTankVaporOutlet": 3.1,
+            "totalizer": 145678.9,
+            "observations": "Combined H2S and LEL monitoring. Both parameters acceptable."
+          }
+        ],
+        "pentane_h2s_lel_hourly": [
+          {
+            "unitNumber": "PHLH-K11",
+            "operatorName": "Karen White",
+            "readingDateTime": "2025-09-11T20:00:00Z",
+            "inletReading": 543.8,
+            "outletReading": 24.7,
+            "exhaustTemperature": 1423.9,
+            "vaporInletFlowRateFpm": 88.2,
+            "combustionAirFlowRate": 131.7,
+            "toInletReadingH2S": 9.8,
+            "h2sOutletReading": 0.7,
+            "lelInletReading": 5.1,
+            "totalizer": 187432.5,
+            "observations": "Hourly monitoring - evening shift. All readings within normal range."
+          }
+        ]
+      },
+      "benzene_monitoring": {
+        "pentane_benzene_degas": [
+          {
+            "unitNumber": "PBZD-L12",
+            "operatorName": "Larry Brown",
+            "readingDateTime": "2025-09-11T07:00:00Z",
+            "inletReading": 445.2,
+            "outletReading": 16.8,
+            "exhaustTemperature": 1467.3,
+            "vaporInletFlowRateFpm": 79.6,
+            "combustionAirFlowRate": 125.9,
+            "benzeneTarget": 1.9,
+            "benzeneTargetPpm": 1.9,
+            "degasOperationStatus": "active",
+            "vacuumAtTankVaporOutlet": 2.8,
+            "totalizer": 123987.4,
+            "observations": "Benzene degas operation. Target levels well maintained."
+          }
+        ]
+      }
+    },
+    "process_operations": {
+      "description": "Mock data for process-specific operations",
+      "refill_operations": {
+        "methane_refill": [
+          {
+            "unitNumber": "MERF-M13",
+            "operatorName": "Mary Garcia",
+            "readingDateTime": "2025-09-11T05:00:00Z",
+            "inletReading": 398.7,
+            "outletReading": 17.2,
+            "exhaustTemperature": 1478.6,
+            "vaporInletFlowRateFpm": 72.4,
+            "tankRefillFlowRateBblHr": 9.3,
+            "combustionAirFlowRate": 115.8,
+            "refillOperationStatus": "active",
+            "totalizer": 67834.2,
+            "observations": "Tank refill in progress. Flow rates optimal for current conditions."
+          }
+        ]
+      },
+      "degas_operations": {
+        "pentane_degas_final": [
+          {
+            "unitNumber": "PDFN-N14",
+            "operatorName": "Nancy Wilson",
+            "readingDateTime": "2025-09-11T23:30:00Z",
+            "inletReading": 145.3,
+            "outletReading": 6.8,
+            "exhaustTemperature": 1398.1,
+            "vaporInletFlowRateFpm": 38.9,
+            "combustionAirFlowRate": 89.6,
+            "degasOperationStatus": "active",
+            "vacuumAtTankVaporOutlet": 1.6,
+            "totalizer": 48765.3,
+            "observations": "Final degas phase. Very low inlet concentrations confirm near completion."
+          }
+        ],
+        "pentane_degas_tanks": [
+          {
+            "unitNumber": "PDTK-O15",
+            "operatorName": "Oscar Martinez",
+            "readingDateTime": "2025-09-11T18:45:00Z",
+            "inletReading": 412.6,
+            "outletReading": 19.8,
+            "exhaustTemperature": 1434.7,
+            "vaporInletFlowRateFpm": 71.3,
+            "combustionAirFlowRate": 108.9,
+            "degasOperationStatus": "active",
+            "vacuumAtTankVaporOutlet": 2.7,
+            "totalizer": 118765.4,
+            "observations": "Multi-tank degas. Coordinating three tanks simultaneously."
+          }
+        ]
+      }
+    },
+    "marathon_custom": {
+      "description": "Marathon GBR specific variations",
+      "marathon_gbr_custom": [
+        {
+          "unitNumber": "GBR-P16",
+          "operatorName": "Paula Davis",
+          "readingDateTime": "2025-09-11T12:30:00Z",
+          "inletReading": 756.8,
+          "outletReading": 38.9,
+          "exhaustTemperature": 1289.4,
+          "vaporInletFlowRateFpm": 103.7,
+          "combustionAirFlowRate": 134.2,
+          "tankRefillFlowRateBblHr": 11.8,
+          "lelInletReading": 9.2,
+          "vaporInletVOCPpm": 523.6,
+          "toInletReadingH2S": 8.4,
+          "vacuumAtTankVaporOutlet": 3.0,
+          "totalizer": 143567.8,
+          "observations": "Marathon GBR - midday operations. LEL approaching target threshold."
+        },
+        {
+          "unitNumber": "GBR-Q17",
+          "operatorName": "Quincy Johnson",
+          "readingDateTime": "2025-09-11T02:00:00Z",
+          "inletReading": 892.3,
+          "outletReading": 49.1,
+          "exhaustTemperature": 1267.9,
+          "vaporInletFlowRateFpm": 97.2,
+          "combustionAirFlowRate": 127.8,
+          "tankRefillFlowRateBblHr": 13.4,
+          "lelInletReading": 8.7,
+          "vaporInletVOCPpm": 478.2,
+          "toInletReadingH2S": 6.9,
+          "vacuumAtTankVaporOutlet": 2.9,
+          "totalizer": 167234.5,
+          "observations": "Night shift operations. Higher inlet concentrations, exhaust temp below optimal.",
+          "validationWarnings": ["Temperature below Marathon target (>1250°F)"]
+        }
+      ]
+    }
+  },
+  "edgeCases": {
+    "description": "Edge cases and boundary conditions for testing",
+    "minMaxValues": {
+      "minimum_valid_readings": {
+        "templateId": "methane_1_5mmbtu",
+        "unitNumber": "MIN-001",
+        "operatorName": "Min Test",
+        "readingDateTime": "2025-09-11T00:00:00Z",
+        "inletReading": 0.1,
+        "outletReading": 0.0,
+        "exhaustTemperature": 1000.0,
+        "totalizer": 0.0,
+        "observations": "Minimum boundary test values"
+      },
+      "maximum_valid_readings": {
+        "templateId": "methane_10_60mmbtu", 
+        "unitNumber": "MAX-001",
+        "operatorName": "Max Test",
+        "readingDateTime": "2025-09-11T23:59:59Z",
+        "inletReading": 9999.9,
+        "outletReading": 9999.9,
+        "exhaustTemperature": 1999.9,
+        "toInletReadingH2S": 99.9,
+        "totalizer": 999999.9,
+        "observations": "Maximum boundary test values"
+      }
+    },
+    "warningThresholds": {
+      "high_temperature_warning": {
+        "templateId": "pentane_10_60mmbtu",
+        "unitNumber": "WARN-001",
+        "operatorName": "Warning Test",
+        "readingDateTime": "2025-09-11T12:00:00Z",
+        "inletReading": 500.0,
+        "outletReading": 25.0,
+        "exhaustTemperature": 1800.0,
+        "observations": "Testing high temperature warning threshold",
+        "expectedWarnings": ["High exhaust temperature detected"]
+      },
+      "high_h2s_warning": {
+        "templateId": "methane_h2s_12hr",
+        "unitNumber": "WARN-002",
+        "operatorName": "Warning Test",
+        "readingDateTime": "2025-09-11T12:00:00Z",
+        "inletReading": 400.0,
+        "outletReading": 20.0,
+        "exhaustTemperature": 1350.0,
+        "toInletReadingH2S": 95.0,
+        "observations": "Testing high H2S warning threshold",
+        "expectedWarnings": ["High H2S concentration detected"]
+      }
+    },
+    "validationErrors": {
+      "invalid_unit_number_format": {
+        "templateId": "methane_1_5mmbtu",
+        "unitNumber": "invalid unit!",
+        "operatorName": "Error Test",
+        "readingDateTime": "2025-09-11T12:00:00Z",
+        "expectedErrors": ["Invalid unit number format"]
+      },
+      "temperature_out_of_range": {
+        "templateId": "pentane_1_5mmbtu",
+        "unitNumber": "ERR-001",
+        "operatorName": "Error Test",
+        "readingDateTime": "2025-09-11T12:00:00Z",
+        "inletReading": 100.0,
+        "outletReading": 10.0,
+        "exhaustTemperature": 2500.0,
+        "expectedErrors": ["Temperature exceeds maximum allowed value"]
+      }
+    }
+  }
+}

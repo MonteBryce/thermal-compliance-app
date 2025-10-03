@@ -1,0 +1,348 @@
+{
+  "marathon_gbr_sample": {
+    "schemaVersion": "1.0.0",
+    "templateMetadata": {
+      "id": "marathon_gbr_custom",
+      "displayName": "Texas - BLANK Thermal Log - Marathon GBR - CUSTOM",
+      "capacity": "10-60MMBTU",
+      "fuelType": "METHANE",
+      "monitoringTypes": ["H2S", "LEL", "VOC"],
+      "frequency": "hourly",
+      "processStage": "standard",
+      "excelTemplatePath": "reports/templates/Texas - BLANK Thermal Log - Marathon GBR - CUSTOM.xlsx",
+      "regulatoryVersion": "8.14.17"
+    },
+    "sections": [
+      {
+        "id": "identification",
+        "displayName": "🏷️ Identification",
+        "order": 1,
+        "collapsible": false
+      },
+      {
+        "id": "readings",
+        "displayName": "🔍 Readings",
+        "order": 2,
+        "collapsible": false
+      },
+      {
+        "id": "flow_rates",
+        "displayName": "🌊 Flow Rates",
+        "order": 3,
+        "collapsible": false
+      },
+      {
+        "id": "chemical_monitoring",
+        "displayName": "🧪 Chemical Monitoring",
+        "order": 4,
+        "collapsible": true,
+        "collapsed": false
+      },
+      {
+        "id": "system_metrics",
+        "displayName": "🔥 System Metrics",
+        "order": 5,
+        "collapsible": false
+      },
+      {
+        "id": "optional_readings",
+        "displayName": "📊 Optional Readings",
+        "order": 6,
+        "collapsible": true,
+        "collapsed": true
+      },
+      {
+        "id": "notes",
+        "displayName": "📝 Notes",
+        "order": 7,
+        "collapsible": false
+      }
+    ],
+    "fields": [
+      {
+        "id": "unitNumber",
+        "label": "Unit #",
+        "type": "text",
+        "section": "identification",
+        "order": 1,
+        "required": true,
+        "validation": {
+          "required": true,
+          "minLength": 1,
+          "maxLength": 10
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Equipment unit identifier"
+      },
+      {
+        "id": "operatorName",
+        "label": "Operator",
+        "type": "text",
+        "section": "identification",
+        "order": 2,
+        "required": true,
+        "validation": {
+          "required": true,
+          "minLength": 2,
+          "maxLength": 50
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Person recording the data"
+      },
+      {
+        "id": "readingDateTime",
+        "label": "Date/Time",
+        "type": "dateTime",
+        "section": "identification",
+        "order": 3,
+        "required": true,
+        "validation": {
+          "required": true
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Timestamp of reading"
+      },
+      {
+        "id": "inletReading",
+        "label": "Inlet Reading",
+        "unit": "PPM",
+        "type": "number",
+        "section": "readings",
+        "order": 1,
+        "required": true,
+        "validation": {
+          "required": true,
+          "min": 0,
+          "warningMax": 1000,
+          "warningMessage": "⚠ High inlet concentration detected"
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Vapor inlet concentration measurement"
+      },
+      {
+        "id": "outletReading",
+        "label": "Outlet Reading",
+        "unit": "PPM",
+        "type": "number",
+        "section": "readings",
+        "order": 2,
+        "required": true,
+        "validation": {
+          "required": true,
+          "min": 0,
+          "warningMax": 500,
+          "warningMessage": "⚠ High outlet concentration - check system efficiency"
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Vapor outlet concentration measurement"
+      },
+      {
+        "id": "exhaustTemperature",
+        "label": "Exhaust Temperature",
+        "unit": "°F",
+        "type": "number",
+        "section": "readings",
+        "order": 3,
+        "required": true,
+        "validation": {
+          "required": true,
+          "min": 0,
+          "max": 2000,
+          "warningMin": 1200,
+          "warningMax": 1400,
+          "warningMessage": "⚠ Marathon target >1250°F",
+          "customValidator": "marathon_thermal_efficiency"
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Thermal oxidizer exhaust temperature - Marathon target: >1250°F"
+      },
+      {
+        "id": "lelInletReading",
+        "label": "%LEL Inlet",
+        "unit": "%",
+        "type": "number",
+        "section": "chemical_monitoring",
+        "order": 1,
+        "required": true,
+        "validation": {
+          "required": true,
+          "min": 0,
+          "max": 100,
+          "warningMax": 10,
+          "warningMessage": "⚠ Above Marathon target (10% LEL)",
+          "customValidator": "marathon_lel"
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"],
+          "dependsOn": ["monitoringTypes"],
+          "condition": "monitoringTypes.includes('LEL')"
+        },
+        "helpText": "Marathon target: 10% LEL"
+      },
+      {
+        "id": "vaporInletVOCPpm",
+        "label": "Vapor Inlet VOC",
+        "unit": "PPM",
+        "type": "number",
+        "section": "chemical_monitoring",
+        "order": 2,
+        "required": true,
+        "validation": {
+          "required": true,
+          "min": 0
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Volatile organic compound concentration at vapor inlet"
+      },
+      {
+        "id": "toInletReadingH2S",
+        "label": "H₂S Reading",
+        "unit": "PPM",
+        "type": "number",
+        "section": "chemical_monitoring",
+        "order": 3,
+        "required": true,
+        "validation": {
+          "required": true,
+          "min": 0,
+          "warningMax": 10,
+          "warningMessage": "⚠ Above OSHA PEL (10 PPM H₂S)"
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Hydrogen sulfide concentration"
+      },
+      {
+        "id": "combustionAirFlowRate",
+        "label": "Combustion Air Flow Rate",
+        "unit": "FPM",
+        "type": "number",
+        "section": "flow_rates",
+        "order": 1,
+        "required": true,
+        "validation": {
+          "required": true,
+          "min": 0,
+          "warningMin": 100,
+          "warningMessage": "⚠ Low combustion air flow - check fan operation"
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Combustion air flow rate in feet per minute"
+      },
+      {
+        "id": "vaporInletFlowRateFpm",
+        "label": "Vapor Inlet Flow Rate",
+        "unit": "FPM",
+        "type": "number",
+        "section": "optional_readings",
+        "order": 1,
+        "isOptional": true,
+        "validation": {
+          "required": false,
+          "min": 0
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Optional vapor inlet flow rate measurement"
+      },
+      {
+        "id": "tankRefillFlowRateBblHr",
+        "label": "Tank Refill Flow Rate",
+        "unit": "BBL/HR",
+        "type": "number",
+        "section": "optional_readings",
+        "order": 2,
+        "isOptional": true,
+        "validation": {
+          "required": false,
+          "min": 0
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Optional tank refill flow rate"
+      },
+      {
+        "id": "vacuumAtTankVaporOutlet",
+        "label": "Vacuum at Tank Vapor Outlet",
+        "unit": "Inch H₂O",
+        "type": "number",
+        "section": "optional_readings",
+        "order": 3,
+        "isOptional": true,
+        "validation": {
+          "required": false,
+          "min": 0
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Optional vacuum measurement"
+      },
+      {
+        "id": "totalizer",
+        "label": "Totalizer",
+        "unit": "SCF",
+        "type": "number",
+        "section": "system_metrics",
+        "order": 1,
+        "validation": {
+          "min": 0
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Cumulative standard cubic feet processed"
+      },
+      {
+        "id": "observations",
+        "label": "Observations / Anomalies",
+        "type": "text",
+        "section": "notes",
+        "order": 1,
+        "validation": {
+          "maxLength": 1000
+        },
+        "conditionalDisplay": {
+          "enabledFor": ["marathon_gbr_custom"]
+        },
+        "helpText": "Marathon GBR specific observations, sour water processing notes..."
+      }
+    ]
+  },
+  "sample_entry_data": {
+    "unitNumber": "GBR-001",
+    "operatorName": "John Smith",
+    "readingDateTime": "2025-09-11T14:30:00Z",
+    "inletReading": 875.5,
+    "outletReading": 45.2,
+    "exhaustTemperature": 1275.8,
+    "lelInletReading": 8.5,
+    "vaporInletVOCPpm": 450.3,
+    "toInletReadingH2S": 7.2,
+    "combustionAirFlowRate": 125.6,
+    "vaporInletFlowRateFpm": 95.4,
+    "tankRefillFlowRateBblHr": 12.5,
+    "vacuumAtTankVaporOutlet": 2.8,
+    "totalizer": 125673.2,
+    "observations": "System operating normally. Exhaust temp within Marathon target range. LEL levels acceptable."
+  }
+}

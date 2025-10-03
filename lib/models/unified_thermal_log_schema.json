@@ -1,0 +1,319 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Unified Texas Thermal Log Schema",
+  "description": "Unified JSON schema for all 17 Texas thermal log template variants",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "templateMetadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the log template"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Human-readable name for the template"
+        },
+        "capacity": {
+          "type": "string",
+          "enum": ["1.5MMBTU", "10-60MMBTU"],
+          "description": "Thermal unit capacity classification"
+        },
+        "fuelType": {
+          "type": "string",
+          "enum": ["METHANE", "PENTANE"],
+          "description": "Primary fuel type for thermal oxidization"
+        },
+        "monitoringTypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["H2S", "Benzene", "LEL", "O2", "VOC"]
+          },
+          "description": "Chemical monitoring types enabled for this template"
+        },
+        "frequency": {
+          "type": "string",
+          "enum": ["hourly", "12hr"],
+          "description": "Data collection frequency"
+        },
+        "processStage": {
+          "type": "string",
+          "enum": ["standard", "degas", "refill", "final_degas", "dual_target"],
+          "description": "Process stage or operational mode"
+        },
+        "excelTemplatePath": {
+          "type": "string",
+          "description": "Path to corresponding Excel template file"
+        },
+        "regulatoryVersion": {
+          "type": "string",
+          "default": "8.14.17",
+          "description": "Texas regulatory template version"
+        }
+      },
+      "required": ["id", "displayName", "capacity", "fuelType"]
+    },
+    "sections": {
+      "type": "array",
+      "description": "Form sections organizing related fields",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique section identifier"
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Section display name with emoji"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Display order of section"
+          },
+          "collapsible": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether section can be collapsed"
+          },
+          "collapsed": {
+            "type": "boolean",
+            "default": false,
+            "description": "Default collapsed state"
+          }
+        },
+        "required": ["id", "displayName", "order"]
+      }
+    },
+    "fields": {
+      "type": "array",
+      "description": "All possible fields across all thermal log templates",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique field identifier"
+          },
+          "label": {
+            "type": "string",
+            "description": "Field display label"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Measurement unit (PPM, °F, FPM, etc.)"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["number", "text", "dropdown", "checkbox", "dateTime", "time"],
+            "description": "Field input type"
+          },
+          "section": {
+            "type": "string",
+            "description": "Section ID this field belongs to"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Display order within section"
+          },
+          "required": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether field is required"
+          },
+          "isOptional": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether field is marked as optional"
+          },
+          "helpText": {
+            "type": "string",
+            "description": "Help text or additional context"
+          },
+          "dropdownOptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Options for dropdown fields"
+          },
+          "validation": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number",
+                "description": "Minimum allowed value"
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum allowed value"
+              },
+              "warningMin": {
+                "type": "number",
+                "description": "Value below which to show warning"
+              },
+              "warningMax": {
+                "type": "number",
+                "description": "Value above which to show warning"
+              },
+              "warningMessage": {
+                "type": "string",
+                "description": "Warning message text"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Regular expression pattern for text validation"
+              },
+              "minLength": {
+                "type": "integer",
+                "description": "Minimum string length"
+              },
+              "maxLength": {
+                "type": "integer",
+                "description": "Maximum string length"
+              },
+              "customValidator": {
+                "type": "string",
+                "description": "Custom validator identifier"
+              },
+              "requiredIf": {
+                "type": "string",
+                "description": "Field ID this field depends on"
+              },
+              "requiredIfValue": {
+                "type": ["string", "number", "boolean"],
+                "description": "Value of dependent field that makes this field required"
+              }
+            }
+          },
+          "conditionalDisplay": {
+            "type": "object",
+            "properties": {
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Field IDs this field's visibility depends on"
+              },
+              "condition": {
+                "type": "string",
+                "description": "JavaScript expression for visibility condition"
+              },
+              "enabledFor": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Template IDs this field is enabled for"
+              }
+            }
+          },
+          "excelMapping": {
+            "type": "object",
+            "properties": {
+              "columnMappings": {
+                "type": "object",
+                "patternProperties": {
+                  "^.*": {
+                    "type": "object",
+                    "properties": {
+                      "columnIndex": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "Excel column index (1-based)"
+                      },
+                      "columnLetter": {
+                        "type": "string",
+                        "description": "Excel column letter (A, B, C, etc.)"
+                      },
+                      "headerRow": {
+                        "type": "integer",
+                        "default": 8,
+                        "description": "Row containing headers"
+                      },
+                      "dataStartRow": {
+                        "type": "integer",
+                        "default": 9,
+                        "description": "First row containing data"
+                      }
+                    },
+                    "required": ["columnIndex"]
+                  }
+                },
+                "description": "Per-template Excel column mappings (templateId -> columnInfo)"
+              }
+            }
+          }
+        },
+        "required": ["id", "label", "type", "section", "order"]
+      }
+    }
+  },
+  "required": ["schemaVersion", "templateMetadata", "sections", "fields"],
+  "definitions": {
+    "commonSections": {
+      "type": "array",
+      "items": [
+        {
+          "id": "identification",
+          "displayName": "🏷️ Identification",
+          "order": 1
+        },
+        {
+          "id": "readings",
+          "displayName": "🔍 Readings",
+          "order": 2
+        },
+        {
+          "id": "flow_rates",
+          "displayName": "🌊 Flow Rates",
+          "order": 3
+        },
+        {
+          "id": "system_metrics",
+          "displayName": "🔥 System Metrics",
+          "order": 4
+        },
+        {
+          "id": "chemical_monitoring",
+          "displayName": "🧪 Chemical Monitoring",
+          "order": 5,
+          "collapsible": true
+        },
+        {
+          "id": "process_operations",
+          "displayName": "⚙️ Process Operations",
+          "order": 6,
+          "collapsible": true,
+          "collapsed": true
+        },
+        {
+          "id": "optional_readings",
+          "displayName": "📊 Optional Readings",
+          "order": 7,
+          "collapsible": true,
+          "collapsed": true
+        },
+        {
+          "id": "notes",
+          "displayName": "📝 Notes",
+          "order": 8
+        }
+      ]
+    },
+    "commonFields": {
+      "type": "array",
+      "description": "Comprehensive field definitions for all thermal log templates",
+      "items": "object"
+    }
+  }
+}

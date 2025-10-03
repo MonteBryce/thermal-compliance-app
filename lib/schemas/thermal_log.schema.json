@@ -1,0 +1,324 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://thermal-logging.texas.gov/schemas/thermal-log.schema.json",
+  "title": "Texas Thermal Log Entry Schema",
+  "description": "Formal JSON Schema Definition for Texas regulatory thermal log entries",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "templateId": {
+      "type": "string",
+      "description": "Template identifier used for this log entry",
+      "enum": [
+        "methane_1_5mmbtu",
+        "pentane_1_5mmbtu", 
+        "methane_10_60mmbtu",
+        "pentane_10_60mmbtu",
+        "methane_10_60mmbtu_2targets",
+        "pentane_h2s_degas",
+        "methane_h2s_12hr",
+        "pentane_h2s_12hr",
+        "pentane_h2s_lel_degas",
+        "pentane_h2s_lel_hourly",
+        "pentane_benzene_degas",
+        "pentane_benzene_lel_degas",
+        "pentane_methane_o2_degas",
+        "methane_refill",
+        "pentane_degas_final",
+        "pentane_degas_tanks",
+        "marathon_gbr_custom"
+      ]
+    },
+    "schemaVersion": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Schema version for compatibility validation"
+    },
+    "entryMetadata": {
+      "type": "object",
+      "properties": {
+        "entryId": {
+          "type": "string",
+          "description": "Unique identifier for this log entry"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Entry creation timestamp"
+        },
+        "lastModified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last modification timestamp"
+        },
+        "validationStatus": {
+          "type": "string",
+          "enum": ["valid", "warnings", "errors", "pending"],
+          "description": "Validation status of the entry"
+        },
+        "operatorId": {
+          "type": "string",
+          "description": "Unique identifier for the operator"
+        }
+      },
+      "required": ["entryId", "createdAt", "validationStatus"]
+    },
+    "identification": {
+      "type": "object",
+      "description": "Basic identification fields",
+      "properties": {
+        "unitNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "pattern": "^[A-Z0-9-]+$",
+          "description": "Equipment unit identifier"
+        },
+        "operatorName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 50,
+          "description": "Name of operator recording data"
+        },
+        "readingDateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when reading was taken"
+        },
+        "readingTime": {
+          "type": "string",
+          "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$",
+          "description": "Time component (HH:MM format)"
+        }
+      },
+      "required": ["unitNumber", "operatorName", "readingDateTime"]
+    },
+    "readings": {
+      "type": "object",
+      "description": "Primary thermal oxidizer readings",
+      "properties": {
+        "inletReading": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000,
+          "description": "Vapor inlet concentration (PPM)"
+        },
+        "outletReading": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10000,
+          "description": "Vapor outlet concentration (PPM)"
+        },
+        "exhaustTemperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2000,
+          "description": "Exhaust temperature (°F)"
+        },
+        "roofLegHeight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Tank roof/leg height (ft)"
+        }
+      },
+      "required": ["inletReading", "outletReading", "exhaustTemperature"]
+    },
+    "flowRates": {
+      "type": "object",
+      "description": "Flow rate measurements",
+      "properties": {
+        "vaporInletFlowRateFpm": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Vapor inlet flow rate (FPM)"
+        },
+        "vaporInletFlowRateBbl": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Vapor inlet flow rate (BBL/HR)"
+        },
+        "combustionAirFlowRate": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Combustion air flow rate (FPM)"
+        },
+        "tankRefillFlowRate": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Tank refill flow rate (BBL/HR)"
+        },
+        "tankRefillFlowRateBblHr": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Tank refill flow rate (BBL/HR) - alternative field"
+        }
+      }
+    },
+    "chemicalMonitoring": {
+      "type": "object",
+      "description": "Chemical monitoring readings",
+      "properties": {
+        "toInletReadingH2S": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "H₂S concentration at thermal oxidizer inlet (PPM)"
+        },
+        "h2sOutletReading": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "H₂S concentration at outlet (PPM)"
+        },
+        "lelInletReading": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Lower explosive limit percentage at inlet (%)"
+        },
+        "vaporInletVOCPpm": {
+          "type": "number",
+          "minimum": 0,
+          "description": "VOC concentration at vapor inlet (PPM)"
+        },
+        "benzeneTarget": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Benzene target concentration (PPM)"
+        },
+        "benzeneTargetPpm": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Benzene target concentration (PPM) - alternative field"
+        },
+        "o2Reading": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 25,
+          "description": "Oxygen concentration reading (%)"
+        }
+      }
+    },
+    "systemMetrics": {
+      "type": "object", 
+      "description": "System performance metrics",
+      "properties": {
+        "totalizer": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Totalizer reading (SCF)"
+        },
+        "vacuumAtTankVaporOutlet": {
+          "type": "number",
+          "description": "Vacuum measurement at tank vapor outlet (Inch H₂O)"
+        },
+        "thermalEfficiency": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Calculated thermal efficiency (%)"
+        }
+      }
+    },
+    "processOperations": {
+      "type": "object",
+      "description": "Process-specific operations",
+      "properties": {
+        "degasOperationStatus": {
+          "type": "string",
+          "enum": ["active", "standby", "maintenance", "offline"],
+          "description": "Degas operation status"
+        },
+        "refillOperationStatus": {
+          "type": "string", 
+          "enum": ["active", "standby", "maintenance", "offline"],
+          "description": "Refill operation status"
+        },
+        "targetNumber": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Target number for dual-target operations"
+        }
+      }
+    },
+    "notes": {
+      "type": "object",
+      "description": "Observations and notes",
+      "properties": {
+        "observations": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Operator observations and anomalies"
+        },
+        "maintenanceNotes": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Maintenance-related notes"
+        },
+        "complianceNotes": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Regulatory compliance notes"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "Validation results",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {"type": "string"},
+              "message": {"type": "string"},
+              "severity": {"type": "string", "enum": ["error", "warning"]}
+            }
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {"type": "string"},
+              "message": {"type": "string"},
+              "threshold": {"type": "number"}
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["templateId", "schemaVersion", "entryMetadata", "identification", "readings"],
+  "additionalProperties": false,
+  "definitions": {
+    "positiveNumber": {
+      "type": "number",
+      "minimum": 0
+    },
+    "ppmReading": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10000
+    },
+    "temperatureReading": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2000
+    },
+    "flowRateReading": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1000
+    },
+    "percentageReading": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    }
+  }
+}

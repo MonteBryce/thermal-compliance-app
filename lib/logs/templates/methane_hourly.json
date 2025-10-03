@@ -1,0 +1,167 @@
+{
+  "id": "methane_hourly",
+  "name": "Methane Hourly Log (H2S & Benzene)",
+  "version": "2025-08-01",
+  "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17 H2S & Benzene.xlsx",
+  "fields": [
+    {
+      "key": "date",
+      "label": "Date",
+      "type": "text",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "hour",
+      "label": "Hour",
+      "type": "text",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "operator",
+      "label": "Operator Name",
+      "type": "text",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "location",
+      "label": "Location/Unit",
+      "type": "text",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "inlet_temp",
+      "label": "Inlet Temperature",
+      "type": "number",
+      "unit": "°F",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "outlet_temp",
+      "label": "Outlet Temperature",
+      "type": "number",
+      "unit": "°F",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "stack_temp",
+      "label": "Stack Temperature",
+      "type": "number",
+      "unit": "°F",
+      "required": false,
+      "visible": true
+    },
+    {
+      "key": "inlet_pressure",
+      "label": "Inlet Pressure",
+      "type": "number",
+      "unit": "PSI",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "outlet_pressure",
+      "label": "Outlet Pressure",
+      "type": "number",
+      "unit": "PSI",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "methane_ppm",
+      "label": "Methane Level",
+      "type": "number",
+      "unit": "PPM",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "h2s_ppm",
+      "label": "H2S Level",
+      "type": "number",
+      "unit": "PPM",
+      "required": true,
+      "visible": true
+    },
+    {
+      "key": "benzene_ppm",
+      "label": "Benzene Level",
+      "type": "number",
+      "unit": "PPM",
+      "required": false,
+      "visible": true
+    },
+    {
+      "key": "oxygen_percent",
+      "label": "Oxygen Level",
+      "type": "number",
+      "unit": "%",
+      "required": false,
+      "visible": true
+    },
+    {
+      "key": "flow_rate",
+      "label": "Flow Rate",
+      "type": "number",
+      "unit": "SCFH",
+      "required": false,
+      "visible": true
+    },
+    {
+      "key": "within_limits",
+      "label": "Within Limits",
+      "type": "boolean",
+      "required": true,
+      "visible": true,
+      "defaultValue": true
+    },
+    {
+      "key": "corrective_action",
+      "label": "Corrective Action",
+      "type": "text",
+      "required": false,
+      "visible": true
+    },
+    {
+      "key": "notes",
+      "label": "Additional Notes",
+      "type": "text",
+      "required": false,
+      "visible": true
+    }
+  ],
+  "ui": {
+    "hourSelector": "24h",
+    "groups": [
+      {
+        "title": "Identification",
+        "keys": ["date", "hour", "operator", "location"]
+      },
+      {
+        "title": "Temperature Readings",
+        "keys": ["inlet_temp", "outlet_temp", "stack_temp"]
+      },
+      {
+        "title": "Pressure Readings",
+        "keys": ["inlet_pressure", "outlet_pressure"]
+      },
+      {
+        "title": "Gas Measurements",
+        "keys": ["methane_ppm", "h2s_ppm", "benzene_ppm", "oxygen_percent"]
+      },
+      {
+        "title": "Flow & Compliance",
+        "keys": ["flow_rate", "within_limits", "corrective_action"]
+      },
+      {
+        "title": "Notes",
+        "keys": ["notes"]
+      }
+    ]
+  }
+}

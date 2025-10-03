@@ -1,0 +1,118 @@
+{
+  "version": "1.0.0",
+  "generated": "2025-09-11T18:28:48.796Z",
+  "templates": [
+    {
+      "id": "methane_1_5mmbtu",
+      "name": "Methane 1.5MMBTU Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 1.5MMBTU (METHANE) 8.14.17.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_1_5mmbtu",
+      "name": "Pentane 1.5MMBTU Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 1.5MMBTU (PENTANE) 8.14.17.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "methane_10_60mmbtu_2targets",
+      "name": "Methane 10-60MMBTU Log (2 Targets)",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 2 targets 8.14.17.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "methane_h2s_12hr",
+      "name": "Methane H2S 12-Hour Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17 - H2S 12 hr.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "methane_h2s_hourly_degas",
+      "name": "Methane H2S Hourly Degas Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17 - H2S Hourly Degas.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "methane_h2s_benzene",
+      "name": "Methane H2S & Benzene Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17 H2S & Benzene.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "methane_10_60mmbtu",
+      "name": "Methane 10-60MMBTU Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (METHANE) 8.14.17.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_h2s_lel_hourly",
+      "name": "Pentane H2S & LEL Hourly Degas",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S & LEL Hourly Degas.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_h2s_12hr",
+      "name": "Pentane H2S 12-Hour Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S 12 hr.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_h2s_benzene",
+      "name": "Pentane H2S Hourly & Benzene",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S Hourly & Benzene.xlsx",
+      "fieldCount": 6
+    },
+    {
+      "id": "pentane_h2s_final_degas",
+      "name": "Pentane H2S Hourly & Final Degas",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S Hourly & Final Degas.xlsx",
+      "fieldCount": 4
+    },
+    {
+      "id": "pentane_h2s_hourly_degas",
+      "name": "Pentane H2S Hourly Degas",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S Hourly Degas.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_h2s_refill",
+      "name": "Pentane H2S Hourly Refill",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - H2S Hourly Refill.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_o2_h2s_hourly",
+      "name": "Pentane O2 & H2S Hourly Degas",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 - O2&H2S Hourly Degas.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_hourly_lel",
+      "name": "Pentane Hourly LEL",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17 -Hrly LEL.xlsx",
+      "fieldCount": 5
+    },
+    {
+      "id": "pentane_10_60mmbtu",
+      "name": "Pentane 10-60MMBTU Log",
+      "version": "2025-09-11",
+      "excelSource": "Texas - BLANK Thermal Log - 10-60MMBTU (PENTANE) 8.14.17.xlsx",
+      "fieldCount": 5
+    }
+  ]
+}
