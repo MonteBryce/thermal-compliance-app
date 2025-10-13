@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git checkout:*)",
+      "Bash(flutter:*)",
+      "Bash(echo $SHELL)",
+      "Read(//c/Users/bryce.montemayor/**)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(code:*)",
+      "Bash(test:*)",
+      "Bash(cmd /c flutter doctor:*)",
+      "Bash(cmd /c:*)",
+      "Read(//c/src/flutter/bin/internal/**)",
+      "Read(//c/src/flutter/bin/**)",
+      "Bash(powershell:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(firebase emulators:start:*)",
+      "Bash(set PATH=C:WindowsSystem32)",
+      "Bash(C:Windows)",
+      "Bash(C:WindowsSystem32WindowsPowerShellv1.0)",
+      "Bash(C:srcflutterbin)",
+      "Bash(pwsh:*)",
+      "Bash(where pwsh)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -28,7 +28,7 @@ class DashboardSummary {
     );
   }
 
-  static const empty = DashboardSummary(
+  static final empty = DashboardSummary(
     activeJobs: 0,
     completionPercentage: 0.0,
     totalAlerts: 0,
@@ -167,15 +167,21 @@ class AdminDashboardState {
   final bool isLoading;
   final String? error;
 
-  const AdminDashboardState({
-    this.jobs = const [],
-    this.filteredJobs = const [],
-    this.summary = DashboardSummary.empty,
-    this.filters = JobFilters.empty,
-    this.isDarkMode = false,
-    this.isLoading = false,
-    this.error,
-  });
+  AdminDashboardState({
+    List<AdminJob> jobs = const [],
+    List<AdminJob> filteredJobs = const [],
+    DashboardSummary? summary,
+    JobFilters filters = JobFilters.empty,
+    bool isDarkMode = false,
+    bool isLoading = false,
+    String? error,
+  })  : jobs = jobs,
+        filteredJobs = filteredJobs,
+        summary = summary ?? DashboardSummary.empty,
+        filters = filters,
+        isDarkMode = isDarkMode,
+        isLoading = isLoading,
+        error = error;
 
   AdminDashboardState copyWith({
     List<AdminJob>? jobs,

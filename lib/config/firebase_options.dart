@@ -30,13 +30,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCNRSaW1gjY1CLS7iWgqbUEy1JeUMD12dw',
-    appId: '1:179822847007:web:1785448f95d82cc711a12a',
-    messagingSenderId: '179822847007',
-    projectId: 'datacollection-e8170',
-    authDomain: 'datacollection-e8170.firebaseapp.com',
-    storageBucket: 'datacollection-e8170.firebasestorage.app',
-    measurementId: 'G-3X0T1TQM3M',
+    apiKey: 'AIzaSyDlVoYJDdvOUvvJ7xb8r0nyt6ETZbb-944',
+    appId: '1:124824593205:web:PLACEHOLDER',
+    messagingSenderId: '124824593205',
+    projectId: 'alien-hologram-470217-r0',
+    authDomain: 'alien-hologram-470217-r0.firebaseapp.com',
+    storageBucket: 'alien-hologram-470217-r0.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -66,13 +65,12 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCNRSaW1gjY1CLS7iWgqbUEy1JeUMD12dw',
-    appId: '1:179822847007:web:316b5bee4c7009ce11a12a',
-    messagingSenderId: '179822847007',
-    projectId: 'datacollection-e8170',
-    authDomain: 'datacollection-e8170.firebaseapp.com',
-    storageBucket: 'datacollection-e8170.firebasestorage.app',
-    measurementId: 'G-EWTYLL22ZF',
+    apiKey: 'AIzaSyDlVoYJDdvOUvvJ7xb8r0nyt6ETZbb-944',
+    appId: '1:124824593205:web:PLACEHOLDER',
+    messagingSenderId: '124824593205',
+    projectId: 'alien-hologram-470217-r0',
+    authDomain: 'alien-hologram-470217-r0.firebaseapp.com',
+    storageBucket: 'alien-hologram-470217-r0.firebasestorage.app',
   );
 
 }

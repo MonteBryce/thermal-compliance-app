@@ -3,20 +3,20 @@
     "platforms": {
       "android": {
         "default": {
-          "projectId": "datacollection-e8170",
-          "appId": "1:179822847007:android:41769428ba1e044a11a12a",
+          "projectId": "alien-hologram-470217-r0",
+          "appId": "1:124824593205:android:e470210f7eba41e80aa27c",
           "fileOutput": "android/app/google-services.json"
         }
       },
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "datacollection-e8170",
+          "projectId": "alien-hologram-470217-r0",
           "configurations": {
-            "android": "1:179822847007:android:41769428ba1e044a11a12a",
-            "ios": "1:179822847007:ios:167e3d896367458511a12a",
-            "macos": "1:179822847007:ios:167e3d896367458511a12a",
-            "web": "1:179822847007:web:1785448f95d82cc711a12a",
-            "windows": "1:179822847007:web:316b5bee4c7009ce11a12a"
+            "android": "1:124824593205:android:e470210f7eba41e80aa27c",
+            "ios": "1:124824593205:ios:PLACEHOLDER",
+            "macos": "1:124824593205:ios:PLACEHOLDER",
+            "web": "1:124824593205:web:PLACEHOLDER",
+            "windows": "1:124824593205:web:PLACEHOLDER"
           }
         }
       }
@@ -35,5 +35,18 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "singleProjectMode": true
   }
 }

@@ -1,11 +1,46 @@
+<div align="center">
+
+<img src="https://via.placeholder.com/64" alt="Thermal Compliance App Logo" height="64"/>
+
 # Thermal Compliance App
 
-> **Production-ready thermal oxidizer compliance monitoring system** for industrial field operations
+### **Digital thermal oxidizer monitoring that replaces paper logs—built for the field** ⚡
 
+*Production-ready cross-platform solution with offline-first architecture for industrial compliance operations*
+
+---
+
+🚀 **[View Live Demo](#)** | 📚 [Features](#-features) | 🛠️ [Installation](#-getting-started)
+
+---
+
+[![Flutter Tests](https://github.com/BryceMonte/thermal-compliance-app/workflows/Flutter%20Tests/badge.svg)](https://github.com/BryceMonte/thermal-compliance-app/actions)
 [![Flutter](https://img.shields.io/badge/Flutter-3.32.7-02569B?logo=flutter&logoColor=white)](https://flutter.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-Firestore%20%7C%20Auth-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js&logoColor=white)](https://nextjs.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+</div>
+
+---
+
+## 📸 Visual Preview
+
+### Mobile Application
+![Job Selection Dashboard](screenshots/job-dashboard.png)
+*Field operators select and manage thermal oxidizer compliance jobs*
+
+![Data Entry Form](screenshots/data-entry-form.png)
+*Dynamic forms with real-time validation and offline support*
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin-dashboard.png)
+*Real-time monitoring and management of all field operations*
+
+![Template Builder](screenshots/template-builder.png)
+*Drag-and-drop form designer for custom compliance templates*
+
+> **Note:** Screenshots coming soon. Check back after deployment!
 
 ---
 
@@ -15,35 +50,55 @@ A comprehensive **cross-platform mobile and web application** that digitizes the
 
 ### **Key Impact**
 - ✅ **90% reduction** in paper-based logging
-- ✅ **75% faster** regulatory report generation
-- ✅ **99.9% data accuracy** through real-time validation
+- ✅ **Faster** regulatory report generation
+- ✅ **Improved Accuracy** through real-time validation
 - ✅ **Full offline capability** for remote field sites
 
 ---
 
 ## ✨ Features
 
-### **Mobile Application (Flutter)**
-- 📱 **Cross-platform** - iOS, Android, and Web from single codebase
-- 🔄 **Offline-first** - Full functionality without network connectivity
-- 📋 **Dynamic forms** - Job-specific data collection templates
-- 🔍 **OCR scanning** - Digitize paper logs and instrument displays
-- ✅ **Real-time validation** - Prevent errors at point of entry
-- 💾 **Auto-save** - Draft recovery and resume capabilities
+### **📱 Mobile Application (Flutter)**
+- **Cross-platform** - iOS, Android, and Web from one codebase
+- **Offline-first** - Full functionality without network connectivity
+- **Dynamic forms** - Job-specific data collection templates
+- **OCR scanning** - Digitize paper logs and instrument displays
+- **Real-time validation** - Prevent errors at point of entry
+- **Auto-save** - Draft recovery and resume capabilities
 
-### **Admin Dashboard (Next.js)**
-- 📊 **Real-time monitoring** - Live compliance oversight across all jobs
-- 🎨 **Template builder** - Drag-and-drop form designer
-- 📈 **Excel export** - Automated regulatory report generation
-- 👥 **User management** - Role-based access control (RBAC)
-- 🔔 **Audit trails** - Complete history of all data modifications
+### **🖥️ Admin Dashboard (Next.js)**
+- **Real-time monitoring** - Live compliance oversight across all jobs
+- **Template builder** - Drag-and-drop form designer
+- **Excel export** - Automated regulatory report generation
+- **User management** - Role-based access control (RBAC)
+- **Audit trails** - Complete history of all data modifications
 
-### **Technical Architecture**
-- 🏗️ **Offline-first design** - Hive local database with background sync
-- 🔥 **Firebase backend** - Firestore, Authentication, Hosting
-- 🎨 **Modern UI/UX** - Dark mode, responsive design
-- 🧪 **Comprehensive testing** - Unit and integration test coverage
-- 🚀 **CI/CD pipeline** - Automated deployment via GitHub Actions
+### **🔄 Complete Workflow**
+
+```mermaid
+graph LR
+    A[📱 Field Technician] -->|Logs readings offline| B[💾 Local Storage]
+    B -->|Auto-sync when online| C[☁️ Firebase Cloud]
+    C -->|Real-time updates| D[📊 Admin Dashboard]
+    D -->|Creates templates| E[📋 Dynamic Forms]
+    E -->|Used by| A
+    D -->|Generates| F[📈 Excel Reports]
+    F -->|Submitted to| G[🏛️ Regulators]
+```
+
+**How it works:**
+1. **Field Entry** → Technician opens mobile app and selects assigned job
+2. **Offline Logging** → Completes dynamic forms with validation (works without internet)
+3. **Auto-Sync** → Data syncs to Firebase when connection available
+4. **Admin Review** → Managers monitor real-time compliance status via dashboard
+5. **Export & Submit** → One-click Excel generation for regulatory reporting
+
+### **🏗️ Technical Highlights**
+- **Offline-first architecture** - Hive local database with intelligent sync
+- **Firebase backend** - Firestore, Authentication, Hosting
+- **Modern UI/UX** - Dark mode, responsive design
+- **Comprehensive testing** - Unit and integration test coverage
+- **CI/CD pipeline** - Automated deployment via GitHub Actions
 
 ---
 
@@ -55,71 +110,50 @@ A comprehensive **cross-platform mobile and web application** that digitizes the
 
 ---
 
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│              Flutter Mobile/Web Application             │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │   Riverpod   │  │  Go Router   │  │  Hive Local  │  │
-│  │    State     │  │  Navigation  │  │   Storage    │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-└─────────────────────────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────┐
-│                  Firebase Platform                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │  Firestore   │  │     Auth     │  │   Hosting    │  │
-│  │   Database   │  │   Service    │  │   + Rules    │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-└─────────────────────────────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────┐
-│              Next.js Admin Dashboard                    │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │   React 19   │  │  Tailwind    │  │   ExcelJS    │  │
-│  │  TypeScript  │  │   + Radix    │  │   Reports    │  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
-└─────────────────────────────────────────────────────────┘
-```
-
-### **Data Flow**
-1. **Field Entry** - Operators log readings via mobile/web
-2. **Local Storage** - Data persisted to Hive for offline reliability
-3. **Background Sync** - Automatic sync to Firestore when connected
-4. **Admin Oversight** - Real-time dashboard monitoring
-5. **Excel Export** - Automated report generation for regulatory submission
-
----
-
 ## 🛠️ Tech Stack
 
-### **Frontend**
-| Technology | Purpose |
-|------------|---------|
-| **Flutter 3.32.7** | Cross-platform mobile & web framework |
-| **Riverpod** | Type-safe state management |
-| **Go Router** | Declarative routing with deep linking |
-| **Hive** | Offline-first local database |
-| **Google ML Kit** | OCR for paper log digitization |
+<div align="center">
+
+### **Mobile & Web**
+[![Flutter](https://img.shields.io/badge/Flutter-3.32.7-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev/)
+[![Riverpod](https://img.shields.io/badge/Riverpod-State_Management-00A8E1?style=for-the-badge)](https://riverpod.dev/)
+[![Hive](https://img.shields.io/badge/Hive-Offline_DB-FF6F00?style=for-the-badge)](https://docs.hivedb.dev/)
+
+### **Admin Dashboard**
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
 ### **Backend & Cloud**
-| Technology | Purpose |
-|------------|---------|
-| **Firebase Firestore** | NoSQL cloud database |
-| **Firebase Auth** | User authentication & sessions |
-| **Firebase Hosting** | CDN-backed static hosting |
-| **Next.js 15** | Admin dashboard (React 19) |
-| **ExcelJS** | Programmatic Excel generation |
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
+[![Firestore](https://img.shields.io/badge/Firestore-Database-FFA611?style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/docs/firestore)
+[![Firebase Auth](https://img.shields.io/badge/Firebase-Auth-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/docs/auth)
 
-### **DevOps**
-| Technology | Purpose |
-|------------|---------|
-| **GitHub Actions** | CI/CD automation |
-| **Docker** | Containerized deployment |
-| **Firebase Emulators** | Local development environment |
+### **DevOps & Tools**
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/features/actions)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
+
+</div>
+
+### **Key Technologies**
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Mobile** | Flutter 3.32.7 | Cross-platform mobile & web framework |
+| **State** | Riverpod | Type-safe state management |
+| **Routing** | Go Router | Declarative navigation with deep linking |
+| **Local DB** | Hive | Offline-first local storage |
+| **OCR** | Google ML Kit | Paper log digitization |
+| **Admin** | Next.js 15 + React 19 | Admin dashboard with TypeScript |
+| **UI** | Tailwind CSS + Radix UI | Modern component library |
+| **Cloud DB** | Firebase Firestore | Real-time NoSQL database |
+| **Auth** | Firebase Auth | User authentication & sessions |
+| **Reports** | ExcelJS | Programmatic Excel generation |
+| **CI/CD** | GitHub Actions | Automated testing & deployment |
+| **Dev Env** | Firebase Emulators | Local development environment |
 
 ---
 
@@ -253,9 +287,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## 🤝 Contact
 
 **Bryce Montemayor**
-📧 bryce.montemayor@example.com
-💼 [LinkedIn](https://linkedin.com/in/brycemontemayor)
-🐙 [GitHub](https://github.com/brycemontemayor)
+
+📧 Email: [Bryceman0829@yahoo.com](mailto:Bryceman0829@yahoo.com)
+💼 LinkedIn: [linkedin.com/in/bryce-montemayor-8a9132124](https://www.linkedin.com/in/bryce-montemayor-8a9132124)
 
 ---
 

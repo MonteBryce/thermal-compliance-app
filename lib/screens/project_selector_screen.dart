@@ -231,76 +231,54 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
         body: SafeArea(
           child: Column(
             children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.all(16.0),
+              // Header with glass effect
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14.0, vertical: 6.0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF152042),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.1),
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
                         "Select Your Assigned Job",
                         style: GoogleFonts.nunito(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
                           color: Colors.white,
+                          letterSpacing: 0.5,
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ),
-                    // Marathon Real Data Button
+                    // Logout Button embedded in header
                     IconButton(
-                      icon: const Icon(Icons.local_gas_station, color: Colors.red),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ImportMarathonJobScreen(),
-                          ),
-                        ).then((_) {
-                          // Refresh the job list after returning
-                          _fetchJobs();
-                        });
-                      },
-                      tooltip: 'Import Marathon Real Data',
-                    ),
-                    // Demo Job Button
-                    IconButton(
-                      icon: const Icon(Icons.science, color: Colors.blue),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const CreateDemoJobScreen(),
-                          ),
-                        ).then((_) {
-                          // Refresh the job list after returning
-                          _fetchJobs();
-                        });
-                      },
-                      tooltip: 'Create Demo Job',
-                    ),
-                    // Thermal Logs Button
-                    IconButton(
-                      icon: const Icon(Icons.thermostat, color: Colors.orange),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const ThermalLogListScreen(
-                              projectId: 'demo-project',
-                            ),
-                          ),
-                        );
-                      },
-                      tooltip: 'Thermal Logs',
-                    ),
-                    // OCR Test Button
-                    IconButton(
-                      icon: const Icon(Icons.camera_alt, color: Colors.white),
-                      onPressed: () => context.go('/ocr-demo'),
-                      tooltip: 'Test OCR',
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.logout, color: Colors.white),
+                      icon: const Icon(Icons.logout_rounded,
+                          color: Colors.white, size: 18),
                       onPressed: _handleLogout,
                       tooltip: 'Logout',
+                      padding: const EdgeInsets.all(6.0),
+                      constraints: const BoxConstraints(
+                        minWidth: 30,
+                        minHeight: 30,
+                      ),
                     ),
                   ],
                 ),
@@ -389,8 +367,13 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
 
     // Group jobs by status for better organization
     final groupedJobs = <String, List<JobData>>{};
-    final statusOrder = ['In Progress', 'Pending', 'Demo Available', 'Completed'];
-    
+    final statusOrder = [
+      'In Progress',
+      'Pending',
+      'Demo Available',
+      'Completed'
+    ];
+
     for (final job in _jobs) {
       final status = job.status;
       if (!groupedJobs.containsKey(status)) {
@@ -405,9 +388,9 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
       itemBuilder: (context, statusIndex) {
         final status = statusOrder[statusIndex];
         final statusJobs = groupedJobs[status] ?? [];
-        
+
         if (statusJobs.isEmpty) return const SizedBox.shrink();
-        
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -430,7 +413,8 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
                   ),
                   const SizedBox(width: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
                       color: _getStatusColor(status).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(10),
@@ -449,9 +433,9 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
             ),
             // Jobs in this status
             ...statusJobs.map((job) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _buildEnhancedJobCard(job),
-            )),
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: _buildEnhancedJobCard(job),
+                )),
           ],
         );
       },
@@ -461,7 +445,7 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
   Widget _buildEnhancedJobCard(JobData job) {
     final isDemo = job.status.toLowerCase() == 'demo available';
     final isInProgress = job.status.toLowerCase() == 'in progress';
-    
+
     return InkWell(
       onTap: () => _handleJobSelect(job),
       borderRadius: BorderRadius.circular(16),
@@ -470,7 +454,9 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
           color: const Color(0xFF152042),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isInProgress ? Colors.blue.withOpacity(0.3) : Colors.transparent,
+            color: isInProgress
+                ? Colors.blue.withOpacity(0.3)
+                : Colors.transparent,
             width: isInProgress ? 1.5 : 0,
           ),
           boxShadow: [
@@ -531,9 +517,9 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
                   _buildStatusBadge(job.status),
                 ],
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // Job details row
               Row(
                 children: [
@@ -554,9 +540,9 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 12),
-              
+
               // Additional details row
               Row(
                 children: [
@@ -577,7 +563,7 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
                   ),
                 ],
               ),
-              
+
               if (isDemo) ...[
                 const SizedBox(height: 12),
                 Container(
@@ -661,9 +647,11 @@ class _JobSelectorScreenState extends State<JobSelectorScreen>
       case 'demo available':
         return const Icon(Icons.science, color: Color(0xFF7C3AED), size: 16);
       case 'completed':
-        return const Icon(Icons.check_circle, color: Color(0xFF10B981), size: 16);
+        return const Icon(Icons.check_circle,
+            color: Color(0xFF10B981), size: 16);
       case 'in progress':
-        return const Icon(Icons.play_circle, color: Color(0xFF3B82F6), size: 16);
+        return const Icon(Icons.play_circle,
+            color: Color(0xFF3B82F6), size: 16);
       case 'pending':
         return const Icon(Icons.schedule, color: Color(0xFFF59E0B), size: 16);
       default:

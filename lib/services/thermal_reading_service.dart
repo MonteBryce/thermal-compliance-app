@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/thermal_reading.dart';
 import '../services/offline_storage_service.dart';
 import 'path_helper.dart';
+import '../utils/timestamp_utils.dart';
 
 class ThermalReadingService {
   final _firestore = FirebaseFirestore.instance;
@@ -20,16 +21,9 @@ class ThermalReadingService {
       throw Exception('User must be logged in to save entries');
     }
 
-    // First ensure the log document exists (especially for past dates)
-    await PathHelper.logDocRef(_firestore, projectId, logId).set({
-      'createdAt': FieldValue.serverTimestamp(),
-      'date': logId,
-      'lastUpdated': FieldValue.serverTimestamp(),
-    }, SetOptions(merge: true));
-    
-    debugPrint('✅ Ensured log document exists for date: $logId');
+    final docId = reading.hour.toString().padLeft(2, '0');
+    final docRef = PathHelper.entryDocRef(_firestore, projectId, logId, docId);
 
-    // Create document data with proper structure
     final docData = {
       'hour': reading.hour,
       'timestamp': reading.timestamp,
@@ -47,24 +41,44 @@ class ThermalReadingService {
       'operatorId': reading.operatorId,
       'validated': reading.validated,
       'createdBy': user.uid,
-      'createdAt': FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
       'synced': true,
     };
 
-    // Use hour as document ID for consistent structure
-    final docId = reading.hour.toString().padLeft(2, '0');
-
     try {
-      // Save to Firestore with structure: /projects/{projectId}/logs/{logId}/entries/{hour}
-      await PathHelper.entryDocRef(_firestore, projectId, logId, docId)
-          .set(docData, SetOptions(merge: true));
+      final logDocRef = PathHelper.logDocRef(_firestore, projectId, logId);
+      final existingLog = await logDocRef.get();
+      final logUpdate = <String, dynamic>{
+        'date': logId,
+        'lastUpdated': FieldValue.serverTimestamp(),
+      };
+      final existingLogData = existingLog.data() as Map<String, dynamic>?;
+      if (!existingLog.exists ||
+          existingLogData == null ||
+          !existingLogData.containsKey('createdAt')) {
+        logUpdate['createdAt'] = FieldValue.serverTimestamp();
+      }
 
-      debugPrint('✅ Thermal reading saved for hour ${reading.hour}');
-      debugPrint('📁 Saved to: /projects/$projectId/logs/$logId/entries/$docId');
-      debugPrint('📊 Data: $docData');
+      await logDocRef.set(logUpdate, SetOptions(merge: true));
+
+      debugPrint('�o. Ensured log document exists for date: $logId');
+
+      final existingEntry = await docRef.get();
+      final existingEntryData = existingEntry.data() as Map<String, dynamic>?;
+      if (!existingEntry.exists ||
+          existingEntryData == null ||
+          !existingEntryData.containsKey('createdAt')) {
+        docData['createdAt'] = FieldValue.serverTimestamp();
+      }
+
+      await docRef.set(docData, SetOptions(merge: true));
+
+      debugPrint('�o. Thermal reading saved for hour ${reading.hour}');
+      debugPrint(
+          'dY"? Saved to: /projects/$projectId/logs/$logId/entries/$docId');
+      debugPrint('dY"S Data: $docData');
     } catch (e) {
-      debugPrint('❌ Error saving to Firestore: $e');
+      debugPrint('�?O Error saving to Firestore: $e');
 
       // Save offline if Firestore fails
       await _saveOffline(projectId, logId, reading, docData);
@@ -81,19 +95,21 @@ class ThermalReadingService {
     required String logId,
   }) async {
     try {
-      final snapshot = await PathHelper.entriesCollectionRef(_firestore, projectId, logId)
-          .orderBy('hour')
-          .get();
+      final snapshot =
+          await PathHelper.entriesCollectionRef(_firestore, projectId, logId)
+              .orderBy('hour')
+              .get();
 
       final readings = <ThermalReading>[];
-      
+
       for (final doc in snapshot.docs) {
         try {
-                          final data = doc.data();
-        if (data != null) {
-          final reading = _mapDocumentToThermalReading(data as Map<String, dynamic>);
-          readings.add(reading);
-        }
+          final data = doc.data();
+          if (data != null) {
+            final reading =
+                _mapDocumentToThermalReading(data as Map<String, dynamic>);
+            readings.add(reading);
+          }
         } catch (e) {
           debugPrint('⚠️ Error parsing document ${doc.id}: $e');
           // Continue processing other documents
@@ -104,7 +120,7 @@ class ThermalReadingService {
       return readings;
     } catch (e) {
       debugPrint('❌ Error loading thermal readings: $e');
-      
+
       // Try to load offline data as fallback
       return await _loadOfflineReadings(projectId, logId);
     }
@@ -119,24 +135,28 @@ class ThermalReadingService {
     final docId = hour.toString().padLeft(2, '0');
 
     try {
-      final doc = await PathHelper.entryDocRef(_firestore, projectId, logId, docId).get();
+      final doc =
+          await PathHelper.entryDocRef(_firestore, projectId, logId, docId)
+              .get();
 
       if (!doc.exists) {
-        debugPrint('❌ No document found for hour $hour at /projects/$projectId/logs/$logId/entries/$docId');
+        debugPrint(
+            '❌ No document found for hour $hour at /projects/$projectId/logs/$logId/entries/$docId');
         return null;
       }
 
       final data = doc.data()!;
       debugPrint('✅ Loaded thermal reading for hour $hour');
       debugPrint('📊 Raw data: $data');
-      
-      final thermalReading = _mapDocumentToThermalReading(data as Map<String, dynamic>);
+
+      final thermalReading =
+          _mapDocumentToThermalReading(data as Map<String, dynamic>);
       debugPrint('🔄 Mapped to: ${thermalReading.toJson()}');
-      
+
       return thermalReading;
     } catch (e) {
       debugPrint('❌ Error loading thermal reading for hour $hour: $e');
-      
+
       // Try offline fallback
       return await _loadOfflineReadingForHour(projectId, logId, hour);
     }
@@ -148,17 +168,19 @@ class ThermalReadingService {
     required String logId,
   }) async {
     try {
-      final snapshot = await PathHelper.entriesCollectionRef(_firestore, projectId, logId).get();
+      final snapshot =
+          await PathHelper.entriesCollectionRef(_firestore, projectId, logId)
+              .get();
 
       final completedHours = <int>{};
-      
+
       for (final doc in snapshot.docs) {
         try {
           final data = doc.data();
-                  final hour = (data as Map<String, dynamic>?)?['hour'] as int?;
-        if (hour != null) {
-          completedHours.add(hour);
-        }
+          final hour = (data as Map<String, dynamic>?)?['hour'] as int?;
+          if (hour != null) {
+            completedHours.add(hour);
+          }
         } catch (e) {
           debugPrint('⚠️ Error parsing hour from document ${doc.id}: $e');
         }
@@ -174,16 +196,16 @@ class ThermalReadingService {
   /// Sync pending offline entries
   Future<void> syncOfflineEntries() async {
     final pendingEntries = await OfflineStorageService.getPendingEntries();
-    
+
     for (final entry in pendingEntries) {
       try {
         final projectId = entry['projectId'] as String;
         final logId = entry['logId'] as String;
         final data = entry['data'] as Map<String, dynamic>;
-        
+
         // Reconstruct ThermalReading from offline data
         final reading = _mapDocumentToThermalReading(data);
-        
+
         // Try to save online
         await saveThermalReading(
           projectId: projectId,
@@ -266,9 +288,9 @@ class ThermalReadingService {
   ) async {
     try {
       final pendingEntries = await OfflineStorageService.getPendingEntries();
-      
+
       for (final entry in pendingEntries) {
-        if (entry['projectId'] == projectId && 
+        if (entry['projectId'] == projectId &&
             entry['logId'] == logId &&
             entry['hour'] == hour.toString().padLeft(2, '0')) {
           try {
@@ -290,7 +312,8 @@ class ThermalReadingService {
   ThermalReading _mapDocumentToThermalReading(Map<String, dynamic> data) {
     return ThermalReading(
       hour: data['hour'] ?? 0,
-      timestamp: data['timestamp'] ?? DateTime.now().toIso8601String(),
+      timestamp:
+          TimestampUtils.toDateTimeOrNow(data['timestamp']).toIso8601String(),
       inletReading: data['inletReading']?.toDouble(),
       outletReading: data['outletReading']?.toDouble(),
       toInletReadingH2S: data['toInletReadingH2S']?.toDouble(),

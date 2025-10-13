@@ -22,7 +22,7 @@ import 'route_parameter_validator.dart';
 
 // Global router instance with enhanced configuration
 final GoRouter appRouter = GoRouter(
-  initialLocation: RouteNames.home,
+  initialLocation: RouteNames.projects, // DEV MODE: Bypass auth and go straight to projects
   debugLogDiagnostics: true,
 
   // Enhanced error handling
