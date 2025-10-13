@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import '../utils/timestamp_utils.dart';
 
 /// Comprehensive Firestore data models for the thermal logging application
 /// Structure: projects/{projectId}/logs/{yyyy-MM-dd}/entries/{hour}
@@ -121,7 +122,9 @@ class ProjectDocument {
       'benzeneTarget': benzeneTarget,
       'h2sAmpRequired': h2sAmpRequired,
       'product': product,
-      'projectStartDate': projectStartDate != null ? Timestamp.fromDate(projectStartDate!) : null,
+      'projectStartDate': projectStartDate != null
+          ? Timestamp.fromDate(projectStartDate!)
+          : null,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
       'createdBy': createdBy,
@@ -172,7 +175,8 @@ class LogDocument {
       logId: doc.id,
       date: DateTime.parse(doc.id), // Parse date from document ID
       projectId: data['projectId'] ?? '',
-      completionStatus: LogCompletionStatus.fromString(data['completionStatus'] ?? 'notStarted'),
+      completionStatus: LogCompletionStatus.fromString(
+          data['completionStatus'] ?? 'notStarted'),
       totalEntries: data['totalEntries'] ?? 0,
       completedHours: data['completedHours'] ?? 0,
       validatedHours: data['validatedHours'] ?? 0,
@@ -195,8 +199,10 @@ class LogDocument {
       'totalEntries': totalEntries,
       'completedHours': completedHours,
       'validatedHours': validatedHours,
-      'firstEntryAt': firstEntryAt != null ? Timestamp.fromDate(firstEntryAt!) : null,
-      'lastEntryAt': lastEntryAt != null ? Timestamp.fromDate(lastEntryAt!) : null,
+      'firstEntryAt':
+          firstEntryAt != null ? Timestamp.fromDate(firstEntryAt!) : null,
+      'lastEntryAt':
+          lastEntryAt != null ? Timestamp.fromDate(lastEntryAt!) : null,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
       'createdBy': createdBy,
@@ -256,7 +262,7 @@ class LogEntryDocument {
     return LogEntryDocument(
       entryId: doc.id,
       hour: data['hour'] ?? 0,
-      timestamp: DateTime.parse(data['timestamp'] ?? DateTime.now().toIso8601String()),
+      timestamp: TimestampUtils.toDateTimeOrNow(data['timestamp']),
       entryType: LogEntryType.fromString(data['entryType'] ?? 'thermal'),
       readings: data['readings'] ?? _extractReadingsFromLegacyFormat(data),
       observations: data['observations'] ?? '',
@@ -275,13 +281,14 @@ class LogEntryDocument {
   Map<String, dynamic> toFirestore() {
     return {
       'hour': hour,
-      'timestamp': timestamp.toIso8601String(),
+      'timestamp': Timestamp.fromDate(timestamp),
       'entryType': entryType.name,
       'readings': readings,
       'observations': observations,
       'operatorId': operatorId,
       'validated': validated,
-      'validatedAt': validatedAt != null ? Timestamp.fromDate(validatedAt!) : null,
+      'validatedAt':
+          validatedAt != null ? Timestamp.fromDate(validatedAt!) : null,
       'validatedBy': validatedBy,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
@@ -292,9 +299,10 @@ class LogEntryDocument {
   }
 
   /// Helper method to extract readings from legacy flat format
-  static Map<String, dynamic> _extractReadingsFromLegacyFormat(Map<String, dynamic> data) {
+  static Map<String, dynamic> _extractReadingsFromLegacyFormat(
+      Map<String, dynamic> data) {
     final readings = <String, dynamic>{};
-    
+
     // List of known reading fields from the existing ThermalReading model
     final readingFields = [
       'inletReading',
@@ -342,7 +350,8 @@ class FirestoreQueries {
   static const String entriesCollection = 'entries';
 
   /// Build collection reference for project logs
-  static CollectionReference<Map<String, dynamic>> projectLogs(String projectId) {
+  static CollectionReference<Map<String, dynamic>> projectLogs(
+      String projectId) {
     return FirebaseFirestore.instance
         .collection(projectsCollection)
         .doc(projectId)
@@ -350,7 +359,8 @@ class FirestoreQueries {
   }
 
   /// Build collection reference for log entries
-  static CollectionReference<Map<String, dynamic>> logEntries(String projectId, String logId) {
+  static CollectionReference<Map<String, dynamic>> logEntries(
+      String projectId, String logId) {
     return FirebaseFirestore.instance
         .collection(projectsCollection)
         .doc(projectId)

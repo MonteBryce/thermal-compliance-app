@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../services/enhanced_ocr_service.dart';
-import '../services/enhanced_ocr_service_backup.dart';
+import '../services/enhanced_ocr_service.dart' as ocr_service;
+import '../services/enhanced_ocr_service_backup.dart' as ocr_service_backup;
+import '../models/enhanced_ocr_result.dart';
 
 /// Provider for the enhanced OCR service
-final enhancedOcrServiceProvider = Provider<EnhancedOcrService>((ref) {
-  return EnhancedOcrService();
+final enhancedOcrServiceProvider = Provider<ocr_service.EnhancedOcrService>((ref) {
+  return ocr_service.EnhancedOcrService();
 });
 
 /// Provider for enhanced OCR results

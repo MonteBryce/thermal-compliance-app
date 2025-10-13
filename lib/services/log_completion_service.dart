@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/firestore_models.dart';
+import '../utils/timestamp_utils.dart';
 
 /// Service for managing log completion status and daily rollups
 class LogCompletionService {
@@ -19,11 +20,13 @@ class LogCompletionService {
 
     try {
       // Get all entries for this log
-      final entriesSnapshot = await FirestoreQueries.logEntries(projectId, logId).get();
-      
+      final entriesSnapshot =
+          await FirestoreQueries.logEntries(projectId, logId).get();
+
       // Calculate completion metrics
       final totalEntries = entriesSnapshot.docs.length;
-      final completedHours = totalEntries; // Each entry represents a completed hour
+      final completedHours =
+          totalEntries; // Each entry represents a completed hour
       final validatedHours = entriesSnapshot.docs
           .where((doc) => doc.data()['validated'] == true)
           .length;
@@ -54,14 +57,14 @@ class LogCompletionService {
       // Get first and last entry timestamps
       DateTime? firstEntryAt;
       DateTime? lastEntryAt;
-      
+
       if (entriesSnapshot.docs.isNotEmpty) {
         final timestamps = entriesSnapshot.docs
-            .map((doc) => DateTime.tryParse(doc.data()['timestamp'] ?? ''))
+            .map((doc) => TimestampUtils.toDateTime(doc.data()['timestamp']))
             .where((date) => date != null)
             .cast<DateTime>()
             .toList();
-        
+
         if (timestamps.isNotEmpty) {
           timestamps.sort();
           firstEntryAt = timestamps.first;
@@ -112,8 +115,8 @@ class LogCompletionService {
     // Collect all numeric readings
     for (final doc in entries) {
       final data = doc.data();
-      final docReadings = data['readings'] as Map<String, dynamic>? ?? 
-                         _extractReadingsFromLegacyFormat(data);
+      final docReadings = data['readings'] as Map<String, dynamic>? ??
+          _extractReadingsFromLegacyFormat(data);
 
       for (final entry in docReadings.entries) {
         final value = entry.value;
@@ -138,15 +141,16 @@ class LogCompletionService {
     // Calculate additional metrics
     metrics['totalReadings'] = entries.length;
     metrics['hoursWithData'] = entries.length;
-    metrics['completionPercentage'] = (entries.length / 24.0 * 100).clamp(0, 100);
-    
+    metrics['completionPercentage'] =
+        (entries.length / 24.0 * 100).clamp(0, 100);
+
     // Calculate time span
     final timestamps = entries
-        .map((doc) => DateTime.tryParse(doc.data()['timestamp'] ?? ''))
+        .map((doc) => TimestampUtils.toDateTime(doc.data()['timestamp']))
         .where((date) => date != null)
         .cast<DateTime>()
         .toList();
-    
+
     if (timestamps.length > 1) {
       timestamps.sort();
       final duration = timestamps.last.difference(timestamps.first);
@@ -158,9 +162,10 @@ class LogCompletionService {
   }
 
   /// Helper method to extract readings from legacy flat format
-  Map<String, dynamic> _extractReadingsFromLegacyFormat(Map<String, dynamic> data) {
+  Map<String, dynamic> _extractReadingsFromLegacyFormat(
+      Map<String, dynamic> data) {
     final readings = <String, dynamic>{};
-    
+
     // List of known reading fields from the existing ThermalReading model
     final readingFields = [
       'inletReading',
@@ -190,8 +195,9 @@ class LogCompletionService {
     required String logId,
   }) async {
     try {
-      final doc = await FirestoreQueries.projectLogs(projectId).doc(logId).get();
-      
+      final doc =
+          await FirestoreQueries.projectLogs(projectId).doc(logId).get();
+
       if (!doc.exists) {
         return null;
       }
@@ -213,7 +219,9 @@ class LogCompletionService {
           .limit(limit)
           .get();
 
-      return snapshot.docs.map((doc) => LogDocument.fromFirestore(doc)).toList();
+      return snapshot.docs
+          .map((doc) => LogDocument.fromFirestore(doc))
+          .toList();
     } catch (e) {
       throw Exception('Failed to get project log statuses: $e');
     }
@@ -258,7 +266,7 @@ class LogCompletionService {
 
     try {
       final batch = _firestore.batch();
-      
+
       for (final entryId in entryIds) {
         final entryRef = FirestoreQueries.logEntry(projectId, logId, entryId);
         batch.update(entryRef, {
@@ -340,7 +348,9 @@ class LogCompletionService {
           .limit(limit)
           .get();
 
-      return snapshot.docs.map((doc) => LogDocument.fromFirestore(doc)).toList();
+      return snapshot.docs
+          .map((doc) => LogDocument.fromFirestore(doc))
+          .toList();
     } catch (e) {
       throw Exception('Failed to get logs by status: $e');
     }

@@ -4,6 +4,7 @@ import '../services/local_database_service.dart';
 import '../services/connection_service.dart';
 import '../models/hive_models.dart';
 import '../models/thermal_reading.dart';
+import '../utils/timestamp_utils.dart';
 import 'connection_providers.dart';
 
 /// Provider that manages hybrid data access - automatically switches between Firestore and Hive
@@ -12,8 +13,7 @@ class HybridDataProvider {
   final Ref ref;
   final FirebaseFirestore _firestore;
 
-  HybridDataProvider(this.ref) 
-    : _firestore = FirebaseFirestore.instance;
+  HybridDataProvider(this.ref) : _firestore = FirebaseFirestore.instance;
 
   /// Get thermal readings for a specific day using hybrid approach
   Future<List<ThermalReading>> getThermalReadingsForDay({
@@ -21,7 +21,7 @@ class HybridDataProvider {
     required String logDate,
   }) async {
     final useFirestore = ref.read(useFirestoreProvider);
-    
+
     if (useFirestore) {
       try {
         return await _getFirestoreThermalReadings(projectId, logDate);
@@ -42,10 +42,10 @@ class HybridDataProvider {
     required ThermalReading reading,
   }) async {
     final useFirestore = ref.read(useFirestoreProvider);
-    
+
     // Always save to Hive first for offline reliability
     await _saveToHive(projectId, logDate, reading);
-    
+
     if (useFirestore) {
       try {
         await _saveToFirestore(projectId, logDate, reading);
@@ -68,7 +68,7 @@ class HybridDataProvider {
     required String logDate,
   }) async {
     final useFirestore = ref.read(useFirestoreProvider);
-    
+
     if (useFirestore) {
       try {
         return await _getFirestoreCompletedHours(projectId, logDate);
@@ -87,17 +87,20 @@ class HybridDataProvider {
     if (!useFirestore) return;
 
     try {
-      final pendingItems = await LocalDatabaseService.getPendingSyncOperations();
+      final pendingItems =
+          await LocalDatabaseService.getPendingSyncOperations();
       print('📤 Syncing ${pendingItems.length} pending items to Firestore');
 
       for (final item in pendingItems) {
         try {
           await _syncItemToFirestore(item);
-          await LocalDatabaseService.updateSyncQueueEntry(item.id, remove: true);
+          await LocalDatabaseService.updateSyncQueueEntry(item.id,
+              remove: true);
           print('✅ Synced item: ${item.id}');
         } catch (e) {
           print('❌ Failed to sync item ${item.id}: $e');
-          await LocalDatabaseService.updateSyncQueueEntry(item.id, error: e.toString());
+          await LocalDatabaseService.updateSyncQueueEntry(item.id,
+              error: e.toString());
         }
       }
     } catch (e) {
@@ -106,7 +109,8 @@ class HybridDataProvider {
   }
 
   // Private Firestore methods
-  Future<List<ThermalReading>> _getFirestoreThermalReadings(String projectId, String logDate) async {
+  Future<List<ThermalReading>> _getFirestoreThermalReadings(
+      String projectId, String logDate) async {
     final snapshot = await _firestore
         .collection('projects')
         .doc(projectId)
@@ -120,7 +124,8 @@ class HybridDataProvider {
       final data = doc.data();
       return ThermalReading(
         hour: data['hour'] ?? 0,
-        timestamp: data['timestamp'] ?? DateTime.now().toIso8601String(),
+        timestamp:
+            TimestampUtils.toDateTimeOrNow(data['timestamp']).toIso8601String(),
         inletReading: data['inletReading']?.toDouble(),
         outletReading: data['outletReading']?.toDouble(),
         toInletReadingH2S: data['toInletReadingH2S']?.toDouble(),
@@ -139,7 +144,8 @@ class HybridDataProvider {
     }).toList();
   }
 
-  Future<void> _saveToFirestore(String projectId, String logDate, ThermalReading reading) async {
+  Future<void> _saveToFirestore(
+      String projectId, String logDate, ThermalReading reading) async {
     await _firestore
         .collection('projects')
         .doc(projectId)
@@ -167,7 +173,8 @@ class HybridDataProvider {
     });
   }
 
-  Future<Set<int>> _getFirestoreCompletedHours(String projectId, String logDate) async {
+  Future<Set<int>> _getFirestoreCompletedHours(
+      String projectId, String logDate) async {
     final snapshot = await _firestore
         .collection('projects')
         .doc(projectId)
@@ -180,15 +187,19 @@ class HybridDataProvider {
   }
 
   // Private Hive methods
-  Future<List<ThermalReading>> _getHiveThermalReadings(String projectId, String logDate) async {
-    return await LocalDatabaseService.getThermalReadingsForDay(projectId, logDate);
+  Future<List<ThermalReading>> _getHiveThermalReadings(
+      String projectId, String logDate) async {
+    return await LocalDatabaseService.getThermalReadingsForDay(
+        projectId, logDate);
   }
 
-  Future<void> _saveToHive(String projectId, String logDate, ThermalReading reading) async {
+  Future<void> _saveToHive(
+      String projectId, String logDate, ThermalReading reading) async {
     await LocalDatabaseService.saveThermalReading(projectId, logDate, reading);
   }
 
-  Future<Set<int>> _getHiveCompletedHours(String projectId, String logDate) async {
+  Future<Set<int>> _getHiveCompletedHours(
+      String projectId, String logDate) async {
     return await LocalDatabaseService.getCompletedHours(projectId, logDate);
   }
 
@@ -197,7 +208,7 @@ class HybridDataProvider {
     // Remove from sync queue if it exists
     final pendingItems = await LocalDatabaseService.getPendingSyncOperations();
     final itemId = '${projectId}_${logDate}_$hour';
-    
+
     for (final item in pendingItems) {
       if (item.id == itemId) {
         await LocalDatabaseService.updateSyncQueueEntry(itemId, remove: true);
@@ -220,7 +231,7 @@ class HybridDataProvider {
       },
       createdAt: DateTime.now(),
     );
-    
+
     await LocalDatabaseService.addToSyncQueue(syncEntry);
   }
 
@@ -248,7 +259,9 @@ final hybridDataProvider = Provider<HybridDataProvider>((ref) {
 });
 
 /// Provider for thermal readings using hybrid approach
-final hybridThermalReadingsProvider = FutureProvider.family<List<ThermalReading>, Map<String, String>>((ref, params) async {
+final hybridThermalReadingsProvider =
+    FutureProvider.family<List<ThermalReading>, Map<String, String>>(
+        (ref, params) async {
   final hybridData = ref.watch(hybridDataProvider);
   return await hybridData.getThermalReadingsForDay(
     projectId: params['projectId']!,
@@ -257,7 +270,8 @@ final hybridThermalReadingsProvider = FutureProvider.family<List<ThermalReading>
 });
 
 /// Provider for completed hours using hybrid approach
-final hybridCompletedHoursProvider = FutureProvider.family<Set<int>, Map<String, String>>((ref, params) async {
+final hybridCompletedHoursProvider =
+    FutureProvider.family<Set<int>, Map<String, String>>((ref, params) async {
   final hybridData = ref.watch(hybridDataProvider);
   return await hybridData.getCompletedHours(
     projectId: params['projectId']!,
@@ -269,7 +283,7 @@ final hybridCompletedHoursProvider = FutureProvider.family<Set<int>, Map<String,
 final backgroundSyncProvider = Provider<void>((ref) {
   final connectionState = ref.watch(connectionStateProvider);
   final hybridData = ref.watch(hybridDataProvider);
-  
+
   // Trigger sync when coming online
   connectionState.when(
     data: (state) {

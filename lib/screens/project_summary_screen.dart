@@ -758,7 +758,7 @@ class _ProjectSummaryScreenState extends State<ProjectSummaryScreen> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF152042),
+        color: const Color(0xFF1A2850),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -786,7 +786,7 @@ class _ProjectSummaryScreenState extends State<ProjectSummaryScreen> {
           ),
           _buildParameterRow(
             icon: Icons.speed,
-            label: 'Facility Target',
+            label: 'Target',
             value: displayJob.facilityTarget,
           ),
           _buildParameterRow(
@@ -1091,9 +1091,9 @@ class _ProjectSummaryScreenState extends State<ProjectSummaryScreen> {
   Widget _buildActionButtons() {
     return Column(
       children: [
-        _buildActionButtonWithText(
-          iconText: '📝',
-          label: selectedLogDate != null 
+        _buildActionButton(
+          icon: Icons.edit,
+          label: selectedLogDate != null
               ? 'Log Data for ${selectedLogDate!.shortDate}'
               : 'Start Logging Hourly Data',
           subtitle: selectedLogDate != null
@@ -1154,52 +1154,57 @@ class _ProjectSummaryScreenState extends State<ProjectSummaryScreen> {
     required Color color,
     required VoidCallback onTap,
   }) {
-    return Material(
-      color: const Color(0xFF152042),
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: const Color(0xFF152042),
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Text(
                   iconText,
-                  style: const TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 28),
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: GoogleFonts.nunito(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.grey[400],
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.nunito(
+                          fontSize: 13,
+                          color: Colors.grey[400],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -1213,49 +1218,54 @@ class _ProjectSummaryScreenState extends State<ProjectSummaryScreen> {
     required Color color,
     required VoidCallback onTap,
   }) {
-    return Material(
-      color: const Color(0xFF152042),
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: color, size: 24),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      label,
-                      style: GoogleFonts.nunito(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: const Color(0xFF152042),
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Icon(icon, color: color, size: 28),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: GoogleFonts.nunito(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: GoogleFonts.nunito(
-                        fontSize: 14,
-                        color: Colors.grey[400],
+                      const SizedBox(height: 2),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.nunito(
+                          fontSize: 13,
+                          color: Colors.grey[400],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

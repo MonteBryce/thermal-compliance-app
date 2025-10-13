@@ -6,8 +6,16 @@ import 'screens/project_selector_screen.dart';
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
+  // DEV MODE: Set to true to bypass authentication
+  static const bool _devBypassAuth = true;
+
   @override
   Widget build(BuildContext context) {
+    // Development bypass - skip authentication entirely
+    if (_devBypassAuth) {
+      return const JobSelectorScreen();
+    }
+
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {

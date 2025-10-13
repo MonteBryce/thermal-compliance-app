@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import '../utils/timestamp_utils.dart';
 
 part 'thermal_log.g.dart';
 
@@ -52,19 +53,20 @@ class ThermalLog extends HiveObject {
   factory ThermalLog.fromFirestore(Map<String, dynamic> data) {
     return ThermalLog(
       id: data['id'] ?? '',
-      timestamp: DateTime.parse(data['timestamp'] ?? DateTime.now().toIso8601String()),
+      timestamp: TimestampUtils.toDateTimeOrNow(data['timestamp']),
       temperature: (data['temperature'] ?? 0.0).toDouble(),
       notes: data['notes'] ?? '',
       projectId: data['projectId'] ?? '',
-      createdAt: DateTime.parse(data['createdAt'] ?? DateTime.now().toIso8601String()),
-      updatedAt: DateTime.parse(data['updatedAt'] ?? DateTime.now().toIso8601String()),
+      createdAt: TimestampUtils.toDateTimeOrNow(data['createdAt']),
+      updatedAt: TimestampUtils.toDateTimeOrNow(data['updatedAt']),
     );
   }
 
   // JSON serialization for general use
   Map<String, dynamic> toJson() => toFirestore();
 
-  factory ThermalLog.fromJson(Map<String, dynamic> json) => ThermalLog.fromFirestore(json);
+  factory ThermalLog.fromJson(Map<String, dynamic> json) =>
+      ThermalLog.fromFirestore(json);
 
   // Helper method to create a copy with updated fields
   ThermalLog copyWith({
