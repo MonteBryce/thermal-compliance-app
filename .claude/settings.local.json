@@ -23,7 +23,9 @@
       "Bash(C:srcflutterbin)",
       "Bash(pwsh:*)",
       "Bash(where pwsh)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []

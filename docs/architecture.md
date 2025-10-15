@@ -1,5 +1,7 @@
 # System Architecture
 
+![System Architecture](diagram-export-10-15-2025-11_50_17-AM.svg)
+
 ## Overview
 
 The Thermal Compliance App follows an **offline-first, mobile-first** architecture pattern designed for reliability in remote industrial settings.
