@@ -1,102 +1,71 @@
 # System Architecture
 
-## 🔍 Interactive Diagram Viewer
+# Architecture Overview
+The Thermal Compliance App is an enterprise-grade, offline-first system for industrial environmental compliance. It uses a modular monolith style, with clear separation between mobile/web client (Flutter), admin dashboard (Next.js), and Firebase backend (Auth, Firestore, Functions, Storage).
 
-**[🚀 View Live Interactive Diagram](https://htmlpreview.github.io/?https://github.com/MonteBryce/thermal-compliance-app/blob/main/docs/architecture-viewer.html)**
-
-**Features:** Scroll to zoom • Click & drag to pan • Keyboard shortcuts (`+`/`-`/`F`/`0`)
-
-No download required - opens directly in your browser with full pan/zoom controls
-
----
-
-## System Integration Flow
-
+## High-Level Diagram
 ![System Architecture](diagram-export-10-15-2025-11_50_17-AM.svg)
+*For interactive pan/zoom, see [architecture-viewer.html](architecture-viewer.html).*
 
-### Viewing Options
+## Code Map / Components
+- **lib/**: Main Flutter app code
+  - `main.dart`: App entry point
+  - `screens/`: UI pages
+  - `services/`: Business logic, sync, validation
+  - `models/`, `types/`, `schemas/`: Data structures
+  - `providers/`: State management (Riverpod)
+  - `firestore/`, `auth/`, `cache/`: Data access layers
+  - `widgets/`: Reusable UI components
+- **admin-dashboard/**: Next.js admin portal
+  - `src/app/`: Main app logic
+  - `firebase-admin.ts`, `firebase.ts`: Firebase integration
+- **test/**: Unit and widget tests
+- **integration_test/**: End-to-end and emulator tests
+- **assets/**: Data and images for charts, logs, etc.
+- **docs/**: Architecture diagrams and documentation
 
-- **Interactive HTML Viewer**: Download [architecture-viewer.html](architecture-viewer.html) and open in browser for pan/zoom controls
-- **GitHub**: Right-click diagram → "Open image in new tab" → Use browser zoom (Ctrl/Cmd + scroll)
-- **High-res Export**: Available in [docs/](.) folder
+## Technology Stack
+- **Languages**: Dart (Flutter), TypeScript (Next.js)
+- **Frameworks**: Flutter, Next.js, Riverpod
+- **Backend/Infra**: Firebase (Auth, Firestore, Functions, Storage)
+- **Local Storage**: Hive (Flutter)
+- **CI/CD**: GitHub Actions, Firebase Emulator Suite
 
----
+## Design Decisions
+- **Offline-first**: Hive local DB, background sync, conflict resolution
+- **Single codebase**: Flutter for all operator platforms
+- **Admin separation**: Next.js for advanced admin features
+- **Managed backend**: Firebase for scalability and security
+- **State management**: Riverpod for testability and modularity
 
-## Overview
+## Getting Started for Developers
+1. **Clone the repo**  
+    `git clone https://github.com/MonteBryce/thermal-compliance-app.git`
+2. **Install dependencies**  
+    - Flutter: `flutter pub get`
+    - Admin: `cd admin-dashboard && npm install`
+3. **Run locally**  
+    - Flutter: `flutter run`
+    - Admin: `npm run dev`
+    - Firebase Emulator: `firebase emulators:start`
+4. **Test**  
+    - Flutter: `flutter test`
+    - Admin: `npm test`
+    - Integration: See `integration_test/` scripts
 
-The Thermal Compliance App follows an **offline-first, mobile-first** architecture pattern designed for reliability in remote industrial settings.
+## Cross-Cutting Concerns
+- **Testing**: Unit (`test/`), integration (`integration_test/`)
+- **Error Handling**: Centralized in services and middleware
+- **Logging**: Local logs, Firestore logs, audit trails
+- **Security**: Firestore rules, JWT, RBAC, encrypted local storage
+- **Performance**: Sync batching, lazy loading, optimized queries
 
-## Architecture Layers
-
-### **1. Presentation Layer**
-- **Flutter Mobile/Web App** - Cross-platform UI
-- **Next.js Admin Dashboard** - Web-based administration
-
-### **2. State Management Layer**
-- **Riverpod Providers** - Reactive state management
-- **Local Cache** - Hive database for offline storage
-- **Sync Manager** - Coordinates local ↔ cloud data flow
-
-### **3. Data Layer**
-- **Firebase Firestore** - Cloud NoSQL database
-- **Firebase Auth** - User authentication
-- **Hive Local Database** - Offline-first storage
-
-### **4. Business Logic Layer**
-- **Services** - Reusable business logic
-- **Validators** - Form and data validation
-- **Repositories** - Data access abstraction
-
-## Data Synchronization
-
-### **Offline-First Strategy**
-
-```
-User Action → Local Write (Hive) → Background Sync Queue → Firestore
-                    ↓
-                UI Update (Immediate)
-```
-
-### **Conflict Resolution**
-- **Last-Write-Wins** - Timestamp-based resolution
-- **Optimistic Updates** - UI updates immediately
-- **Retry Logic** - Exponential backoff for failures
-
-## Security
-
-### **Authentication Flow**
-1. Firebase Auth (Email/Password)
-2. JWT tokens for API access
-3. Role-based access control (RBAC)
-
-### **Data Protection**
-- Firestore security rules enforce authorization
-- Local data encrypted at rest (Hive)
-- HTTPS-only communication
-
-## Scalability
-
-### **Current Capacity**
-- 10,000+ concurrent users
-- 1M+ documents in Firestore
-- 50MB local storage per user
-
-### **Performance Targets**
-- < 2s app cold start
-- < 500ms form load time
-- < 5s sync completion (typical)
-
-## Technology Decisions
-
-| Decision | Rationale |
-|----------|-----------|
-| **Flutter** | Single codebase for iOS, Android, Web |
-| **Riverpod** | Type-safe, testable state management |
-| **Hive** | Fast, lightweight local database |
-| **Firebase** | Managed backend, real-time sync |
-| **Next.js** | Server-side rendering for admin portal |
-
-## Deployment Architecture
+## References
+- [README.md](../README.md)
+- [SETUP_INSTRUCTIONS.md](../SETUP_INSTRUCTIONS.md)
+- [WIREFRAME_project_summary.md](../WIREFRAME_project_summary.md)
+- [docs/architecture-viewer.html](architecture-viewer.html)
+- [Firebase Emulator Integration Test](../integration_test/firebase_emulator_integration_test.dart)
 
 ```
 ┌──────────────────────────────────────────┐
