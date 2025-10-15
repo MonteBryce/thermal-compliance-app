@@ -1,62 +1,71 @@
 # Admin Dashboard
 
-> Next.js-based administrative portal for the Thermal Compliance App
+# Architecture Overview
+The Admin Dashboard is a Next.js-based portal for managing, monitoring, and exporting compliance data. It follows a modular monolith style, leveraging React Server Components, Firebase Admin SDK, and ExcelJS for regulatory reporting.
 
-## Features
+## High-Level Diagram
+*(Embed a diagram here, e.g., Mermaid, ASCII, or SVG. If you have an SVG, use:)*  
+`![Admin Dashboard Architecture](../docs/admin-dashboard-architecture.svg)`
 
-- 📊 **Real-time monitoring** - Live view of all field operations
-- 🎨 **Template builder** - Visual form designer for data collection
-- 📈 **Excel exports** - Automated regulatory report generation
-- 👥 **User management** - Role-based access control
-- 🔍 **Audit logs** - Complete data modification history
+## Code Map / Components
+- **src/app/**: Next.js App Router, layouts, pages (`login/`, `admin/`, `sandbox/`, etc.)
+- **src/components/**: Modular React components
+  - `auth/`: AuthGuard, PermissionGuard
+  - `charts/`: UsageMetricsChart, PerformanceChart, ExportStatsChart
+  - `excel/`: ExcelPreview
+  - `logbuilder/`: SmartFieldBuilder, ComplianceIntelligence, ValidationWidget, etc.
+  - `template/`: MetricDesignerPanel, StructureValidationPanel, TemplateGridPreview
+  - `ui/`: UI primitives (Button, Card, Table, etc.)
+  - `providers/`: ServiceWorkerProvider
+  - `lazy/`: Dynamic imports, lazy wrappers
+- **public/**: Static assets
+- **package.json**: Project manifest
+- **next.config.js**: Next.js configuration
 
-## Tech Stack
+## Technology Stack
+- **Languages**: TypeScript, JavaScript
+- **Frameworks**: Next.js 15, React 19, Tailwind CSS, Radix UI
+- **Backend/Infra**: Firebase Admin SDK, ExcelJS
+- **Testing**: Jest, React Testing Library
 
-- **Next.js 15** - React framework with App Router
-- **React 19** - Latest React with Server Components
-- **TypeScript** - Type-safe development
-- **Tailwind CSS** - Utility-first styling
-- **Radix UI** - Accessible component primitives
-- **ExcelJS** - Excel file generation
-- **Firebase Admin SDK** - Backend integration
+## Design Decisions
+- **Server Components**: For performance and scalability
+- **Role-based Access**: AuthGuard, PermissionGuard for RBAC
+- **ExcelJS**: Automated, customizable Excel exports
+- **Modular UI**: Reusable primitives and feature modules
+- **Firebase Admin SDK**: Secure backend integration
 
-## Getting Started
+## Getting Started for Developers
+1. **Install dependencies**  
+	```bash
+	npm install
+	```
+2. **Run locally**  
+	```bash
+	npm run dev
+	```
+	Visit [http://localhost:3000](http://localhost:3000)
+3. **Build for production**  
+	```bash
+	npm run build
+	npm run start
+	```
+4. **Environment setup**  
+	- Create `.env.local` with Firebase and service account keys
 
-### **Development**
-```bash
-npm install
-npm run dev
-```
+## Cross-Cutting Concerns
+- **Testing**: Unit and integration tests in `src/` and `__tests__/`
+- **Error Handling**: Centralized in components and API routes
+- **Logging**: Audit logs, operation history
+- **Security**: RBAC, JWT, secure environment variables
+- **Performance**: Server Components, lazy loading, optimized queries
 
-Visit http://localhost:3000
-
-### **Build**
-```bash
-npm run build
-npm run start
-```
-
-### **Environment Variables**
-Create `.env.local`:
-```
-NEXT_PUBLIC_FIREBASE_API_KEY=your_key
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project
-FIREBASE_SERVICE_ACCOUNT_KEY=your_service_account_json
-```
-
-## Project Structure
-
-```
-admin-dashboard/
-├── src/
-│   ├── app/              # Next.js App Router
-│   ├── components/       # React components
-│   ├── lib/             # Utilities and helpers
-│   └── styles/          # Global styles
-├── public/              # Static assets
-├── package.json
-└── next.config.js
-```
+## References
+- [Main App README](../README.md)
+- [Architecture Diagrams](../docs/)
+- [Next.js Docs](https://nextjs.org/docs)
+- [Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)
+- [ExcelJS](https://github.com/exceljs/exceljs)
 
 ## Available Scripts
 
