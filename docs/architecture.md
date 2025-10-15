@@ -46,7 +46,7 @@ The Thermal Compliance App is an **enterprise-grade, offline-first system** desi
 
 ## 🏗️ High-Level Component Map
 
-```
+```text
 thermal-compliance-app/
 ├── 📱 Mobile Application (Flutter)
 │   ├── Presentation Layer (Screens, Widgets)
