@@ -1,4 +1,6 @@
-![diagram-export-10-15-2025-11_50_17-AM](https://github.com/user-attachments/assets/45b03018-7f6a-436a-a61a-587c15d19401)# Thermal Compliance Monitoring System
+
+[export-10_15_2025, 11_53_31 AM - Copy.pdf](https://github.com/user-attachments/files/22932409/export-10_15_2025.11_53_31.AM.-.Copy.pdf)
+
 
 **Enterprise-grade digital compliance solution for thermal oxidizer operations**
 
