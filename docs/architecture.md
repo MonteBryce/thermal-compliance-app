@@ -2,9 +2,11 @@
 
 ## 🔍 Interactive Diagram Viewer
 
-**[📱 Open Interactive Viewer](architecture-viewer.html)** - Pan, zoom, and explore the full architecture diagram
+**[🚀 View Live Interactive Diagram](https://htmlpreview.github.io/?https://github.com/MonteBryce/thermal-compliance-app/blob/main/docs/architecture-viewer.html)**
 
-*For the best viewing experience, download and open `architecture-viewer.html` in your browser*
+**Features:** Scroll to zoom • Click & drag to pan • Keyboard shortcuts (`+`/`-`/`F`/`0`)
+
+No download required - opens directly in your browser with full pan/zoom controls
 
 ---
 
