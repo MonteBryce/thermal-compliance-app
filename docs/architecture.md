@@ -1,6 +1,24 @@
 # System Architecture
 
+## 🔍 Interactive Diagram Viewer
+
+**[📱 Open Interactive Viewer](architecture-viewer.html)** - Pan, zoom, and explore the full architecture diagram
+
+*For the best viewing experience, download and open `architecture-viewer.html` in your browser*
+
+---
+
+## System Integration Flow
+
 ![System Architecture](diagram-export-10-15-2025-11_50_17-AM.svg)
+
+### Viewing Options
+
+- **Interactive HTML Viewer**: Download [architecture-viewer.html](architecture-viewer.html) and open in browser for pan/zoom controls
+- **GitHub**: Right-click diagram → "Open image in new tab" → Use browser zoom (Ctrl/Cmd + scroll)
+- **High-res Export**: Available in [docs/](.) folder
+
+---
 
 ## Overview
 
